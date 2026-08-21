@@ -2,174 +2,54 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ofojero AI Pro</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        :root {
+            --bg: #030712;
+            --chat-bg: #111827;
+            --ai-msg: #1f2937;
+            --user-msg: #3b82f6;
+            --text: #f9fafb;
         }
-        header {
-            background-color: #1e293b;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #334155;
-            font-size: 1.25rem;
-            font-weight: bold;
-        }
-        .clear-btn {
-            background-color: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: bold;
-        }
-        .clear-btn:hover {
-            background-color: #dc2626;
-        }
-        #chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        .message {
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            max-width: 75%;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-        .user-message {
-            background-color: #3b82f6;
-            color: white;
-            align-self: flex-end;
-        }
-        .ai-message {
-            background-color: #334155;
-            color: #f8fafc;
-            align-self: flex-start;
-        }
-        #input-container {
-            background-color: #1e293b;
-            padding: 1rem;
-            display: flex;
-            justify-content: center;
-            border-top: 1px solid #334155;
-        }
-        #input-box {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            gap: 0.5rem;
-        }
-        input {
-            flex: 1;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #475569;
-            background-color: #0f172a;
-            color: white;
-            outline: none;
-        }
-        button.send-btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button.send-btn:hover {
-            background-color: #2563eb;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        header { padding: 20px; text-align: center; font-size: 1.5rem; font-weight: 800; background: var(--chat-bg); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        #chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 700px; margin: 0 auto; width: 100%; }
+        .message { padding: 12px 18px; border-radius: 18px; max-width: 80%; line-height: 1.6; font-size: 1rem; }
+        .user-message { background: var(--user-msg); align-self: flex-end; color: white; border-bottom-right-radius: 4px; }
+        .ai-message { background: var(--ai-msg); align-self: flex-start; color: var(--text); border-bottom-left-radius: 4px; }
+        #input-area { padding: 20px; background: var(--chat-bg); display: flex; justify-content: center; }
+        input { width: 100%; max-width: 600px; padding: 15px; border-radius: 30px; border: 1px solid #374151; background: #1f2937; color: white; outline: none; }
+        button { margin-left: 10px; padding: 10px 20px; border-radius: 20px; border: none; background: #3b82f6; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #2563eb; }
     </style>
 </head>
 <body>
-
-    <header>
-        <span>Ofojero AI Pro</span>
-        <button class="clear-btn" onclick="clearChat()">Söhbəti Təmizlə</button>
-    </header>
-
-    <div id="chat-container"></div>
-
-    <div id="input-container">
-        <div id="input-box">
-            <input type="text" id="user-input" placeholder="Mesajınızı bura yazın..." onkeydown="handleKeyPress(event)">
-            <button class="send-btn" onclick="sendMessage()">Göndər</button>
-        </div>
+    <header>Ofojero AI Pro ✨</header>
+    <div id="chat-container">
+        <div class="message ai-message">Salam! Mən Ofojero-yam. Sənin üçün nə edə bilərəm?</div>
+    </div>
+    <div id="input-area">
+        <input type="text" id="user-input" placeholder="Mesajını yaz...">
+        <button onclick="sendMessage()">Göndər</button>
     </div>
 
     <script>
-        let messages = JSON.parse(localStorage.getItem('ofo_chat')) || [
-            { sender: 'ai', text: 'Salam! Mən Ofojero AI Pro-yam. Söhbət tarixçəniz yadda saxlanılır. Sizə necə kömək edə bilərəm?' }
-        ];
-
-        const chatContainer = document.getElementById('chat-container');
-
-        function renderChat() {
-            chatContainer.innerHTML = '';
-            messages.forEach(msg => {
-                const div = document.createElement('div');
-                div.className = `message ${msg.sender === 'user' ? 'user-message' : 'ai-message'}`;
-                div.textContent = msg.text;
-                chatContainer.appendChild(div);
-            });
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
         function sendMessage() {
-            const inputField = document.getElementById('user-input');
-            const text = inputField.value.trim();
-            if (!text) return;
+            const input = document.getElementById('user-input');
+            const container = document.getElementById('chat-container');
+            if (!input.value) return;
 
-            messages.push({ sender: 'user', text: text });
-            inputField.value = '';
-            saveAndRender();
+            // İstifadəçi mesajı
+            container.innerHTML += `<div class="message user-message">${input.value}</div>`;
+            const userText = input.value;
+            input.value = '';
 
-            // Süni intellekt simulyasiya cavabı
+            // AI cavabı (animasiya kimi)
             setTimeout(() => {
-                let aiReply = "Ofojero AI olaraq qeyd etdim: \"" + text + "\". Bütün funksiyalar (yaddaş, təmizləmə) artıq işlək vəziyyətdədir!";
-                messages.push({ sender: 'ai', text: aiReply });
-                saveAndRender();
-            }, 800);
+                container.innerHTML += `<div class="message ai-message">Ofojero başa düşdü: ${userText}... (Həqiqi AI inteqrasiyası üçün hazıram!)</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 500);
         }
-
-        function saveAndRender() {
-            localStorage.setItem('ofo_chat', JSON.stringify(messages));
-            renderChat();
-        }
-
-        function clearChat() {
-            messages = [{ sender: 'ai', text: 'Söhbət təmizləndi. Yeni sualınızı verə bilərsiniz!' }];
-            saveAndRender();
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-
-        // Səhifə açılanda mesajları yüklə
-        renderChat();
     </script>
 </body>
 </html>
