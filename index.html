@@ -60,20 +60,21 @@
                         "Content-Type": "application/json" 
                     },
                     body: JSON.stringify({
-                        model: "llama3-8b-8192",
+                        model: "llama-3.3-70b-versatile",
                         messages: [{ role: "user", content: text }]
                     })
                 });
 
                 const data = await response.json();
-                
-                if (data.choices && data.choices.length > 0) {
+                document.getElementById(loadingId).remove();
+
+                if (data && data.choices && data.choices.length > 0 && data.choices[0].message) {
                     const aiReply = data.choices[0].message.content;
-                    document.getElementById(loadingId).remove();
                     container.innerHTML += `<div class="message ai">${aiReply}</div>`;
+                } else if (data.error) {
+                    container.innerHTML += `<div class="message ai">API Xətası: ${data.error.message}</div>`;
                 } else {
-                    document.getElementById(loadingId).remove();
-                    container.innerHTML += `<div class="message ai">Cavab alınarkən boş nəticə qayıtdı.</div>`;
+                    container.innerHTML += `<div class="message ai">Cavab formatı uyğun gəlmədi.</div>`;
                 }
             } catch (error) {
                 document.getElementById(loadingId).remove();
