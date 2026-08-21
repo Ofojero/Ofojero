@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ofojero AI</title>
+    <title>Ofojero AI Pro</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,11 +16,26 @@
         }
         header {
             background-color: #1e293b;
-            padding: 1rem;
-            text-align: center;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
             font-size: 1.25rem;
             font-weight: bold;
-            border-bottom: 1px solid #334155;
+        }
+        .clear-btn {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+        .clear-btn:hover {
+            background-color: #dc2626;
         }
         #chat-container {
             flex: 1;
@@ -38,6 +53,7 @@
             border-radius: 0.5rem;
             max-width: 75%;
             line-height: 1.5;
+            word-break: break-word;
         }
         .user-message {
             background-color: #3b82f6;
@@ -71,7 +87,7 @@
             color: white;
             outline: none;
         }
-        button {
+        button.send-btn {
             padding: 0.75rem 1.5rem;
             border: none;
             background-color: #3b82f6;
@@ -80,52 +96,80 @@
             cursor: pointer;
             font-weight: bold;
         }
-        button:hover {
+        button.send-btn:hover {
             background-color: #2563eb;
         }
     </style>
 </head>
 <body>
 
-    <header>Ofojero AI Köməkçisi</header>
+    <header>
+        <span>Ofojero AI Pro</span>
+        <button class="clear-btn" onclick="clearChat()">Söhbəti Təmizlə</button>
+    </header>
 
-    <div id="chat-container">
-        <div class="message ai-message">Salam! Mən Ofojero AI-yam. Sizə necə kömək edə bilərəm?</div>
-    </div>
+    <div id="chat-container"></div>
 
     <div id="input-container">
         <div id="input-box">
-            <input type="text" id="user-input" placeholder="Mesajınızı bura yazın..." onkeydown="if(event.key === 'Yaz') sendMessage()">
-            <button onclick="sendMessage()">Göndər</button>
+            <input type="text" id="user-input" placeholder="Mesajınızı bura yazın..." onkeydown="handleKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()">Göndər</button>
         </div>
     </div>
 
     <script>
+        let messages = JSON.parse(localStorage.getItem('ofo_chat')) || [
+            { sender: 'ai', text: 'Salam! Mən Ofojero AI Pro-yam. Söhbət tarixçəniz yadda saxlanılır. Sizə necə kömək edə bilərəm?' }
+        ];
+
+        const chatContainer = document.getElementById('chat-container');
+
+        function renderChat() {
+            chatContainer.innerHTML = '';
+            messages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = `message ${msg.sender === 'user' ? 'user-message' : 'ai-message'}`;
+                div.textContent = msg.text;
+                chatContainer.appendChild(div);
+            });
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
         function sendMessage() {
             const inputField = document.getElementById('user-input');
-            const chatContainer = document.getElementById('chat-container');
-            const userText = inputField.value.trim();
+            const text = inputField.value.trim();
+            if (!text) return;
 
-            if (!userText) return;
-
-            // İstifadəçinin mesajını əlavə et
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'message user-message';
-            userMessageDiv.textContent = userText;
-            chatContainer.appendChild(userMessageDiv);
-
+            messages.push({ sender: 'user', text: text });
             inputField.value = '';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            saveAndRender();
 
-            // Süni intellektin cavabı (sadə simulyasiya / cavab sistemi)
+            // Süni intellekt simulyasiya cavabı
             setTimeout(() => {
-                const aiMessageDiv = document.createElement('div');
-                aiMessageDiv.className = 'message ai-message';
-                aiMessageDiv.textContent = "Ofojero AI olaraq dediyinizi başa düşdüm: \"" + userText + "\". Bu hələ başlanğıcdır, növbəti mərhələdə daha da güclənəcəyəm!";
-                chatContainer.appendChild(aiMessageDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 1000);
+                let aiReply = "Ofojero AI olaraq qeyd etdim: \"" + text + "\". Bütün funksiyalar (yaddaş, təmizləmə) artıq işlək vəziyyətdədir!";
+                messages.push({ sender: 'ai', text: aiReply });
+                saveAndRender();
+            }, 800);
         }
+
+        function saveAndRender() {
+            localStorage.setItem('ofo_chat', JSON.stringify(messages));
+            renderChat();
+        }
+
+        function clearChat() {
+            messages = [{ sender: 'ai', text: 'Söhbət təmizləndi. Yeni sualınızı verə bilərsiniz!' }];
+            saveAndRender();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Səhifə açılanda mesajları yüklə
+        renderChat();
     </script>
 </body>
 </html>
