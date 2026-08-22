@@ -20,37 +20,49 @@
     <header>Ofojero Intelligence</header>
     
     <div id="chat-container">
-        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Sualını yaza bilərsən.</div>
+        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Dünyanın tarixi, elmi, texnologiyası və ya istənilən digər mövzusunda sualını verə bilərsən.</div>
     </div>
 
     <div id="input-area">
         <div class="input-wrapper">
-            <input type="text" id="user-input" placeholder="Mesajınızı daxil edin..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <input type="text" id="user-input" placeholder="Dünyadan nə bilmək istəyirsən? Yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
             <button onclick="sendMsg()">Göndər</button>
         </div>
     </div>
 
     <script>
+        const globalDatabase = {
+            "kosmos": "Kosmos — kainatdakı bütün materiya, enerji, ulduzlar, qalaktikalar və planetlərin yerləşdiyi sonsuz fəzadır. Böyük Partlayış (Big Bang) nəticəsində təqribən 13.8 milyard il əvvəl yaranmışdır.",
+            "tarix": "Bəşər tarixi qədim sivilizasiyalardan (Sümer, Misir, Qədim Roma), orta əsr imperiyalarından, intibah dövründən və müasir texnologiya əsrindən keçərək günümüzə qədər gəlib çatmışdır.",
+            "elm": "Elm — təbiətin və cəmiyyətin qanunauyğunluqlarını öyrənən, sübuta və təcrübələrə əsaslanan sistemli biliklər toplusudur. Fizika, kimya, biologiya və riyaziyyat əsas elm sahələridir.",
+            "texnologiya": "Texnologiya — elmi biliklərin praktiki həyatda tətbiqi, maşınlar, kompüterlər, süni intellekt və rəqəmsal sistemlərin yaradılması prosesidir.",
+            "azerbaycan": "Azərbaycan — Qafqazın cənubunda yerləşən, zəngin təbii sərvətlərə (neft, qaz), qədim mədəniyyətə və strateji coğrafi mövqeyə malik respublikadır.",
+            "dünya": "Yer kürəsi — Günəş sistemində həyatın mövcud olduğu məlum olan yeganə planetdir. Səthinin təqribən 71%-i sudan, 29%-i isə quru sahələrindən ibarətdir."
+        };
+
         function sendMsg() {
             const input = document.getElementById('user-input');
             const container = document.getElementById('chat-container');
             const text = input.value.trim();
             if (!text) return;
 
-            // İstifadəçinin mesajı
             container.innerHTML += `<div class="message user">${text}</div>`;
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
-            // Süni intellektin cavabı (heç bir xəta vermədən təmiz işləyən sistem)
             setTimeout(() => {
-                let reply = "Sualınızı qəbul etdim. Ofojero Intelligence olaraq bu istiqamətdə əmrlərinizi gözləyirəm!";
-                
                 const lowerText = text.toLowerCase();
-                if (lowerText.includes("necərsən") || lowerText.includes("salam")) {
-                    reply = "Salam! Mən əla işləyirəm, sənə necə kömək edə bilərəm?";
-                } else if (lowerText.includes("adın") || lowerText.includes("kimsən")) {
-                    reply = "Mən Ofojero Intelligence sistemiyəm!";
+                let reply = "";
+
+                for (let key in globalDatabase) {
+                    if (lowerText.includes(key)) {
+                        reply = globalDatabase[key];
+                        break;
+                    }
+                }
+
+                if (!reply) {
+                    reply = `Ofojero Intelligence qlobal bazası yoxlayır: "${text}" haqqında dünyada bir çox məlumat mövcuddur. Bu mövzu elm, tarix və ya müasir həyatla sıx bağlıdır. Sənə bu haqda daha dəqiq hansı tərəfini izah edim?`;
                 }
 
                 container.innerHTML += `<div class="message ai">${reply}</div>`;
