@@ -20,18 +20,18 @@
     <header>Ofojero Intelligence</header>
     
     <div id="chat-container">
-        <div class="message ai">Salam! Mən Ofojero Intelligence-əm. Nə istəyirsən danışaq, hər şeyi bilirəm. Sualını ver və ya mövzu aç.</div>
+        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Hansı mövzuda kömək edə bilərəm?</div>
     </div>
 
     <div id="input-area">
         <div class="input-wrapper">
-            <input type="text" id="user-input" placeholder="Nə haqqında danışaq? Yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <input type="text" id="user-input" placeholder="Mesajınızı daxil edin..." onkeydown="if(event.key==='Enter') sendMsg()">
             <button onclick="sendMsg()">Göndər</button>
         </div>
     </div>
 
     <script>
-        let lastTopic = "";
+        let lastSubject = "";
 
         function sendMsg() {
             const input = document.getElementById('user-input');
@@ -47,31 +47,31 @@
                 const lower = text.toLowerCase();
                 let reply = "";
 
-                if (lower.includes("sonra") || lower.includes("davam et") || lower.includes("həmçinin")) {
-                    if (lastTopic.includes("tarix") || lastTopic.includes("azərbaycan")) {
-                        reply = "Davam edək: Azərbaycanın qədim dövlətçilik tarixi Manna, İskit, Atropatena və Albaniya ilə başlayır. Orta əsrlərdə Şirvanşahlar, Səfəvilər kimi nəhəng imperiyalar qurulub. XX əsrdə isə 1918-ci ildə Şərqdə ilk demokratik respublika — Azərbaycan Xalq Cümhuriyyəti yaradıldı.";
-                    } else if (lastTopic.includes("kosmos") || lastTopic.includes("elm")) {
-                        reply = "Davam edək: Kainatda milyardlarla qalaktika var. Bizim Süd Yolu qalaktikamızda isə yüz milyardlarla ulduz mövcuddur. Alimlər həmçinin qara dəliklərin mərkəzindəki sirli qravitasiya qüvvəsini və zamanın bükülməsini öyrənirlər.";
+                // Salamlaşma və hal-əhval yoxlaması
+                if (lower.includes("salam") || lower.includes("hey")) {
+                    reply = "Salam! Necəsən? Hansı mövzuda kömək edə bilərəm?";
+                } else if (lower.includes("necərsən") || lower.includes("neynirsən")) {
+                    reply = "Çox sağ ol, mən əlayam! Səninlə söhbət etməyə və suallarını cavablandırmağa hazıram. Sən necəsən?";
+                } else if (lower.includes("adın") || lower.includes("kimsən")) {
+                    reply = "Mən Ofojero Intelligence — sənin yaratdığın süni intellekt köməkçisiyəm.";
+                } 
+                // Davam etmək və ya sonrakı hissəni istəmək
+                else if (lower.includes("sonra") || lower.includes("davam et")) {
+                    if (lastSubject) {
+                        reply = `"${lastSubject}" mövzusunu davam etdirək: Bu sahənin digər maraqlı tərəfləri də var. Məsələn, buradakı əsas detallar və proseslər qarşılıqlı əlaqədə inkişaf edir. Daha nəyi bilmək istəyirsən?`;
                     } else {
-                        reply = "Əlbəttə, mövzunu dərindən davam etdirək: Bu sahə özündə çoxlu maraqlı faktları birləşdirir. Konkret hansı dövrü və ya detalı dərindən araşdıraq?";
+                        reply = "Nəyi davam edək? Öncə hansı mövzu haqqında danışdığımızı yaz, davamını gətirim.";
                     }
-                } else {
-                    lastTopic = lower;
-                    
-                    if (lower.includes("tarix") || lower.includes("azərbaycan") || lower.includes("dövlət")) {
-                        reply = "Azərbaycan tarixi qədim sivilizasiyaların mərkəzi olub. Qobustan qayalarındakı minillik rəsmlər, azıxantropun izləri və qədim ticarət yolları bu torpağın nə qədər zəngin olduğunu göstərir. (Ətraflı davam etmək üçün 'sonra' yazabilərsən).";
-                    } else if (lower.includes("kosmos") || lower.includes("kainat") || lower.includes("elm")) {
-                        reply = "Kainat təqribən 13.8 milyard əvvəl Böyük Partlayışla (Big Bang) yaranıb. O vaxtdan bəri dayanmadan genişlənir. İşığın sürəti ilə belə kainatın bir ucundan digərinə getmək milyardlarla il çəkər.";
-                    } else if (lower.includes("sen kimsən") || lower.includes("adın")) {
-                        reply = "Mən Ofojero Intelligence sistemiyəm. Heç bir məhdudiyyətsiz, tam açıq şəkildə sənə dünyanın istənilən məlumatını çatdırmaq üçün yığılmışam.";
-                    } else {
-                        reply = `"${text}" mövzusu olduqca maraqlıdır. Dünyada bu haqda çoxlu elmi və tarixi faktlar mövcuddur. İstəyirsən bu haqda daha detallı məlumat verim, sadəcə "davam et" və ya "sonra" yaz.`;
-                    }
+                } 
+                // Ümumi istənilən sual üçün
+                else {
+                    lastSubject = text;
+                    reply = `"${text}" haqqında istədiyin məlumatı verə bilərəm. Bu mövzu olduqca maraqlıdır və özündə bir çox fərqli istiqaməti birləşdirir. Konkret hansı hissəsini öyrənmək istəyirsən?`;
                 }
 
                 container.innerHTML += `<div class="message ai">${reply}</div>`;
                 container.scrollTop = container.scrollHeight;
-            }, 600);
+            }, 500);
         }
     </script>
 </body>
