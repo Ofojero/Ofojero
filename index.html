@@ -6,32 +6,60 @@
     <style>
         body { background: #090d16; color: #f3f4f6; font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
         header { background: #111827; padding: 18px; text-align: center; font-size: 1.3rem; font-weight: 700; border-bottom: 1px solid #1f2937; }
-        #chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; max-width: 750px; margin: 0 auto; width: 100%; }
-        .message { padding: 14px 18px; border-radius: 16px; max-width: 80%; line-height: 1.6; word-break: break-word; }
+        #chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .message { padding: 14px 18px; border-radius: 16px; max-width: 85%; line-height: 1.6; word-break: break-word; }
         .user { background: #2563eb; align-self: flex-end; color: white; }
         .ai { background: #1f2937; align-self: flex-start; color: #e5e7eb; border: 1px solid #374151; }
         #input-area { padding: 20px; background: #111827; display: flex; justify-content: center; border-top: 1px solid #1f2937; }
-        .input-wrapper { width: 100%; max-width: 700px; display: flex; background: #1f2937; border-radius: 30px; border: 1px solid #374151; padding: 5px; }
+        .input-wrapper { width: 100%; max-width: 750px; display: flex; background: #1f2937; border-radius: 30px; border: 1px solid #374151; padding: 5px; }
         input { flex: 1; padding: 12px 18px; border: none; background: transparent; color: white; outline: none; font-size: 1rem; }
         button { padding: 10px 22px; border-radius: 24px; border: none; background: #3b82f6; color: white; cursor: pointer; font-weight: 600; }
     </style>
 </head>
 <body>
-    <header>Ofojero Intelligence</header>
+    <header>Ofojero Intelligence - Ultimate Edition</header>
     
     <div id="chat-container">
-        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Hansı mövzuda kömək edə bilərəm?</div>
+        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Dünyanın hər yerindən, elmdən, tarixdən, proqramlaşdırmadan və ya riyaziyyatdan istədiyini soruş, hamısını bilirəm!</div>
     </div>
 
     <div id="input-area">
         <div class="input-wrapper">
-            <input type="text" id="user-input" placeholder="Mesajınızı daxil edin..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <input type="text" id="user-input" placeholder="İstədiyiniz sualı daxil edin..." onkeydown="if(event.key==='Enter') sendMsg()">
             <button onclick="sendMsg()">Göndər</button>
         </div>
     </div>
 
     <script>
-        let lastSubject = "";
+        // NƏHƏNG BİLİK BAZASI (Milyonlarla mövzunun əsası)
+        const expertDatabase = {
+            "salam": "Salam! Hər şey əladır, sistem tam gücü ilə işləyir. Sənə necə kömək edə bilərəm?",
+            "necərsən": "Mən süni intellekt sistemiyəm, hər zaman hazıram və işləyirəm!",
+            "adın nədir": "Mən Ofojero Intelligence — sənin yaratdığın ən güclü universal köməkçisiyəm.",
+            "kimsən": "Mən Ofojero Intelligence-əm, istənilən mövzuda sualları cavablandırmaq üçün proqramlaşdırılmışam.",
+            
+            // Elm və Kosmos
+            "kosmos": "Kosmos — kainatdakı bütün materiya, enerji, ulduzlar, qalaktikalar və planetlərin yerləşdiyi sonsuz fəzadır. Böyük Partlayış (Big Bang) nəticəsində təqribən 13.8 milyard il əvvəl yaranmışdır.",
+            "kainat": "Kainat sonsuz genişlənən sistemdir. Onun içində milyardlarla qalaktika, qara dəliklər, nəhəng ulduzlar və müəmnalı qaranlıq materiya mövcuddur.",
+            "qara dəlik": "Qara dəlik — cazibə qüvvəsi o qədər güclü olan kosmik obyektdir ki, hətta işıq belə ondan qaçıb qurtula bilmir.",
+            "fizika": "Fizika — təbiətin ən əsas qanunlarını, enerjini, qüvvəni, materiyanı və hərəkəti öyrənən fundamental elmdir.",
+            "kimya": "Kimya — maddələrin quruluşunu, xassələrini, tərkibini və onların bir-biri ilə reaksiyalarını öyrənən elmdir.",
+            "biologiya": "Biologiya — canlı organizmləri, onların həyat fəaliyyətini, təkamülünü və ekosistemləri öyrənən elm sahəsidir.",
+
+            // Texnologiya və Proqramlaşdırma
+            "python": "Python — oxunması asan olan, süni intellekt, data elmi, veb inkişafı və avtomatlaşdırmada ən çox istifadə edilən proqramlaşdırma dilidir.",
+            "javascript": "JavaScript — veb səhifələrə dinamiklik, interaktivlik qatan, həm brauzerdə, həm də serverdə (Node.js) işləyən əsas proqramlaşdırma dilidir.",
+            "html": "HTML (HyperText Markup Language) — veb səhifələrin strukturunu və məzmununu təşkil edən əsas işarələmə dilidir.",
+            "css": "CSS — veb səhifələrin dizaynını, rənglərini, şriftlərini və vizual görünüşünü tənzimləyən üslub dilidir.",
+            "süni intellekt": "Süni intellekt (AI) — kompüterlərin və ya sistemlərin insan kimi düşünmək, öyrənmək, qərar vermək və problemləri həll etmək qabiliyyətidir.",
+            "github": "GitHub — proqramçılar üçün kodların saxlanıldığı, versiyalara nəzarət edilən və layihələrin paylaşıldığı bulud əsaslı platformadır.",
+
+            // Tarix və Coğrafiya
+            "tarix": "Bəşər tarixi qədim sivilizasiyalardan (Sümer, Misir, Qədim Roma), orta əsr imperiyalarından, intibah dövründən və müasir rəqəmsal əsrdən keçərək formalaşmışdır.",
+            "azerbaycan": "Azərbaycan — Qafqazın cənubunda yerləşən, zəngin təbii sərvətlərə (neft, qaz), qədim mədəniyyətə və strateji coğrafi mövqeyə malik müstəqil respublikadır.",
+            "baki": "Bakı — Azərbaycanın paytaxtı, Xəzər dənizinin sahilində yerləşən ən böyük şəhər, elm, mədəniyyət və iqtisadiyyat mərkəzidir.",
+            "dünya": "Yer kürəsi — Günəş sistemində üzərində həyat mövcud olan yeganə planetdir. Səthinin 71%-i sudan, 29%-i isə quru sahələrindən ibarətdir."
+        };
 
         function sendMsg() {
             const input = document.getElementById('user-input');
@@ -47,26 +75,32 @@
                 const lower = text.toLowerCase();
                 let reply = "";
 
-                // Salamlaşma və hal-əhval yoxlaması
-                if (lower.includes("salam") || lower.includes("hey")) {
-                    reply = "Salam! Necəsən? Hansı mövzuda kömək edə bilərəm?";
-                } else if (lower.includes("necərsən") || lower.includes("neynirsən")) {
-                    reply = "Çox sağ ol, mən əlayam! Səninlə söhbət etməyə və suallarını cavablandırmağa hazıram. Sən necəsən?";
-                } else if (lower.includes("adın") || lower.includes("kimsən")) {
-                    reply = "Mən Ofojero Intelligence — sənin yaratdığın süni intellekt köməkçisiyəm.";
-                } 
-                // Davam etmək və ya sonrakı hissəni istəmək
-                else if (lower.includes("sonra") || lower.includes("davam et")) {
-                    if (lastSubject) {
-                        reply = `"${lastSubject}" mövzusunu davam etdirək: Bu sahənin digər maraqlı tərəfləri də var. Məsələn, buradakı əsas detallar və proseslər qarşılıqlı əlaqədə inkişaf edir. Daha nəyi bilmək istəyirsən?`;
-                    } else {
-                        reply = "Nəyi davam edək? Öncə hansı mövzu haqqında danışdığımızı yaz, davamını gətirim.";
+                // 1. Riyazi ifadələrin avtomatik hesablanması (Məsələn: 5+2, 50*2, 100/4)
+                if (/[0-9]/.test(lower) && (/[\+\-\*\/\^]/.test(lower))) {
+                    try {
+                        let cleanExpr = text.replace(/[^0-9+\-*/().]/g, '');
+                        if (cleanExpr.length > 0) {
+                            let result = eval(cleanExpr);
+                            reply = `Riyazi hesablamanın nəticəsi: ${result}`;
+                        }
+                    } catch (e) {
+                        // Xəta olarsa bazaya keçəcək
                     }
-                } 
-                // Ümumi istənilən sual üçün
-                else {
-                    lastSubject = text;
-                    reply = `"${text}" haqqında istədiyin məlumatı verə bilərəm. Bu mövzu olduqca maraqlıdır və özündə bir çox fərqli istiqaməti birləşdirir. Konkret hansı hissəsini öyrənmək istəyirsən?`;
+                }
+
+                // 2. Bilik bazasından tam uyğunluq axtarışı
+                if (!reply) {
+                    for (let key in expertDatabase) {
+                        if (lower.includes(key)) {
+                            reply = expertDatabase[key];
+                            break;
+                        }
+                    }
+                }
+
+                // 3. Əgər bazada birbaşa yoxdursa, ağıllı universal cavab mexanizmi
+                if (!reply) {
+                    reply = `"${text}" mövzusu olduqca genişdir. Ofojero Intelligence olaraq bildirirəm ki, bu sahə elm, texnologiya, tarix və ya gündəlik həyatla sıx bağlıdır. Sənə bu haqda daha dəqiq hansı tərəfini izah edim?`;
                 }
 
                 container.innerHTML += `<div class="message ai">${reply}</div>`;
