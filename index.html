@@ -2,184 +2,336 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <title>Ofojero Intelligence - Maximus Infinite Universe Edition</title>
+    <title>Ofojero</title>
     <style>
-        body { background: #030407; color: #f3f4f6; font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
-        header { background: #080c14; padding: 18px; text-align: center; font-size: 1.4rem; font-weight: 700; border-bottom: 1px solid #1e293b; letter-spacing: 0.5px; color: #38bdf8; }
-        #chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; max-width: 950px; margin: 0 auto; width: 100%; }
-        .message { padding: 18px 22px; border-radius: 18px; max-width: 88%; line-height: 1.7; word-break: break-word; font-size: 1.03rem; }
-        .user { background: #2563eb; align-self: flex-end; color: white; border-bottom-right-radius: 4px; }
-        .ai { background: #0d1322; align-self: flex-start; color: #f1f5f9; border: 1px solid #1e293b; border-bottom-left-radius: 4px; }
-        #input-area { padding: 20px; background: #080c14; display: flex; justify-content: center; border-top: 1px solid #1e293b; }
-        .input-wrapper { width: 100%; max-width: 900px; display: flex; background: #0d1322; border-radius: 35px; border: 1px solid #334155; padding: 6px; }
-        input { flex: 1; padding: 12px 20px; border: none; background: transparent; color: white; outline: none; font-size: 1.05rem; }
-        button { padding: 12px 26px; border-radius: 30px; border: none; background: #2563eb; color: white; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
-        button:hover { background: #1d4ed8; }
+        :root {
+            --bg-deep: #030407;
+            --bg-panel: #080c14;
+            --bg-input: #0d1322;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        header {
+            background: var(--bg-panel);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            font-weight: 600;
+        }
+
+        #chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 1050px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            padding: 16px 20px;
+            border-radius: 16px;
+            max-width: 85%;
+            line-height: 1.6;
+            word-break: break-word;
+            font-size: 1.02rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            align-self: flex-end;
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+        }
+
+        .ai {
+            background: var(--bg-panel);
+            align-self: flex-start;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .quick-topics {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 8px 24px 14px 24px;
+            max-width: 1050px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .topic-pill {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .topic-pill:hover {
+            background: var(--accent);
+            color: var(--bg-deep);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        #input-area {
+            padding: 20px 24px;
+            background: var(--bg-panel);
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .input-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            background: var(--bg-input);
+            border-radius: 35px;
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 18px;
+            border: none;
+            background: transparent;
+            color: white;
+            outline: none;
+            font-size: 1.02rem;
+        }
+
+        button {
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: none;
+            background: var(--accent);
+            color: var(--bg-deep);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover { background: var(--accent-hover); }
+        button:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
-    <header>Ofojero Intelligence - Maximus Infinite Universe Edition</header>
+    <header>
+        <span>Ofojero</span>
+        <div class="status-badge">Aktiv 🚀</div>
+    </header>
     
     <div id="chat-container">
-        <div class="message ai">Salam! Ofojero Infinite Universe bazası tam gücü, genişləndirilmiş meqabazası və yüzlərlə yeni elmi-mədəni modulu ilə aktivdir. Nəyi öyrənmək istəyirsən?</div>
+        <div class="message ai">Salam! Ofojero bazası tam gücü və genişləndirilmiş ensiklopedik modulları ilə aktivdir. Nəyi öyrənmək istəyirsən?</div>
+    </div>
+
+    <div class="quick-topics">
+        <div class="topic-pill" onclick="sendPreset('Kriştiano Ronaldo')">⚽ Ronaldo</div>
+        <div class="topic-pill" onclick="sendPreset('Lionel Messi')">⚽ Messi</div>
+        <div class="topic-pill" onclick="sendPreset('Futbol məşqçiliyi')">📋 Məşqçilik</div>
+        <div class="topic-pill" onclick="sendPreset('Interstellar')">🎬 Interstellar</div>
+        <div class="topic-pill" onclick="sendPreset('Python')">💻 Python</div>
+        <div class="topic-pill" onclick="sendPreset('Next.js')">⚡ Next.js</div>
+        <div class="topic-pill" onclick="sendPreset('Albert Eynşteyn')">🌟 Eynşteyn</div>
+        <div class="topic-pill" onclick="sendPreset('Qara dəlik')">🌌 Qara dəlik</div>
+        <div class="topic-pill" onclick="sendPreset('Azərbaycan')">🇦🇿 Azərbaycan</div>
+        <div class="topic-pill" onclick="sendPreset('Bitcoin')">🪙 Bitcoin</div>
     </div>
 
     <div id="input-area">
         <div class="input-wrapper">
-            <input type="text" id="user-input" placeholder="Elm, kosmos, proqramlaşdırma, kino, tarix, musiqi və ya istənilən mövzunu yazın..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <input type="text" id="user-input" placeholder="İstənilən mövzunu yazın, riyazi məsələ həll edin..." onkeydown="if(event.key==='Enter') sendMsg()">
             <button onclick="sendMsg()">Göndər</button>
         </div>
     </div>
 
     <script>
-        // MAXIMUS INFINITE UNIVERSE BİLİK BAZASI (MEGA EXPANDED EDITION)
-        const maximusDatabase = {
-            // 🤖 Sistem və Təqdimat
-            "salam": "Salam! Ofojero Infinite Universe bazası xidmətinizdədir. İstənilən elm, texnologiya, tarix və ya mədəniyyət mövzusunu soruşa bilərsiniz.",
-            "necərsən": "Hər şey əladır! Bütün sonsuz ensiklopedik modullar və qlobal biliklər maksimum güclə işləyir.",
-            "adın nədir": "Mən Ofojero Intelligence — səninlə birlikdə hər gün sərhədlərini genişləndirdiyimiz universal süni intellekt sistemiyəm.",
-            "kimsən": "Mən Ofojero Intelligence-əm, dünyanın elm, texnologiya, seriallar, kino, mifologiya, idman, tarix, fəlsəfə, kosmos və proqramlaşdırma biliklərini özündə birləşdirən nəhəng ensiklopediyayam.",
+        // OFOJERO MEGA BAZA
+        const knowledgeBase = {
+            "salam": "Salam! Ofojero bazası xidmətinizdədir. İstənilən elm, texnologiya, tarix, idman və ya mədəniyyət mövzusunu soruşa bilərsiniz.",
+            "necərsən": "Hər şey əladır! Bütün ensiklopedik modullar maksimum güclə işləyir.",
+            "adın nədir": "Mən Ofojero — sənin universal süni intellekt köməkçisiyəm.",
+            "kimsən": "Mən Ofojero; elm, texnologiya, kino, idman, tarix və proqramlaşdırma biliklərini özümdə birləşdirən universal sisteməm.",
 
-            // 🎬 KULT KİNO, SERIALAR VƏ ANİMASİYALAR
+            // Kino, Serial, Animasiya
             "breaking bad": "Breaking Bad — kimya müəlliminin narkotik imperiyası qurmasından bəhs edən televiziya tarixinin ən yaxşı dram seriallarından biridir.",
-            "game of thrones": "Game of Thrones (Taxt-tac oyunları) — siyasi intriqalar, əjdahalar və səltənət mübarizələri ilə dolu kult fantastik serialdır.",
-            "interstellar": "Interstellar (Ulduzlararası) — qurd dəlikləri, nisbilik və zaman səyahətindən bəhs edən Christopher Nolan-ın dahi filmidir.",
-            "inception": "Inception (Başlanğıc) — yuxular içində yuxu qurmaq və şüura təsir etmək mövzusundan bəhs edən kult filmdir.",
-            "up": "Pixar-ın 'Up' animasiya filmi — Karl və Ellinin həyat hekayəsindən bəhs edən unikal, emosional və dərin mənalı şah əsərdir.",
-            "stranger things": "Stranger Things — 1980-ci illərin nostaljisini, elmi-fantastika və paralel kainat sirrini özündə birləşdirən populyar Netflix serialıdır.",
-            "matrix": "The Matrix — gerçəkliyin simulyasiya olduğunu və insanlığın maşınlar tərəfindən idarə edildiyini göstərən fəlsəfi kult elmi-fantastik filmdir.",
-            "gladiator": "Gladiator — Roma imperatorluğunun fonunda intiqam və şərəf mübarizəsindən bəhs edən epik kino şah əsəridir.",
-            "dark": "Dark — zaman səyahətinin səbəb olduğu səbəb-nəticə paradokslarını araşdıran dahi Alman istehsalı sirr və dram serialıdır.",
-            "fight club": "Fight Club — istehlak cəmiyyətini tənqid edən və insan şüurunun dərinliklərini araşdıran kult filmdir.",
-            "avatar": "Avatar — Ceyms Kemeronun təqdim etdiyi, Pandora planetində keçən və vizual effektləri ilə kino tarixini dəyişən epik filmdir.",
-            "oppenheimer": "Oppenheimer — atom bombasının yaradılma prosesini və fizir Robert Oppenheimerin həyatını izah edən Oskar mükafatlı filmdir.",
-            "peaky blinders": "Peaky Blinders — Birinci Dünya Müharibəsindən sonra Birminhem şəhərində fəaliyyət göstərən quldur dəstəsindən bəhs edən kult britan serialıdır.",
-            "lord of the rings": "The Lord of the Rings (Üzüklərin Hökmdarı) — J.R.R. Tolkien-in əsəri əsasında çəkilmiş, fantastika və orta əsr epik mübarizəsindən bəhs edən şah əsərdir.",
+            "game of thrones": "Game of Thrones — siyasi intriqalar, əjdahalar və səltənət mübarizələri ilə dolu kult fantastik serialdır.",
+            "interstellar": "Interstellar — qurd dəlikləri, nisbilik və zaman səyahətindən bəhs edən Christopher Nolan-ın dahi filmidir.",
+            "inception": "Inception — yuxular içində yuxu qurmaq və şüura təsir etmək mövzusundan bəhs edən kult filmdir.",
+            "up": "Pixar-ın 'Up' animasiya filmi — Karl və Ellinin həyat hekayəsindən bəhs edən unikal və emosional şah əsərdir.",
+            "matrix": "The Matrix — gerçəkliyin simulyasiya olduğunu və insanlığın maşınlar tərəfindən idarə edildiyini göstərən fəlsəfi filmdir.",
+            "dark": "Dark — zaman səyahətinin səbəb olduğu paradoksları araşdıran dahi Alman istehsalı sirr və dram serialıdır.",
 
-            // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİLİZASİYALAR
+            // Mifologiya
             "zevs": "Zevs — yunan mifologiyasında tanrıların və insanların atası, Olimpin hökmdarı və şimşək tanrısıdır.",
             "tor": "Tor — skandinaviya mifologiyasında çəkici ilə tanınan güclü şimşək və fırtına tanrısıdır.",
-            "poseydon": "Poseydon — yunan mifologiyasında dənizlərin, zəlzələlərin və atların hökmdarı olan qüdrətli tanrıdır.",
-            "hades": "Hades — yunan mifologiyasında yeraltı səltənətin və ölülər dünyasının hökmdarıdır.",
-            "odin": "Odin — skandinaviya mifologiyasında bilik, müdriklik, savaş və şeir tanrısı, Asqardın başçısıdır.",
-            "loki": "Loki — skandinaviya mifologiyasında hiyləgərlik, fəlakət və forma dəyişdirmə qabiliyyəti ilə tanınan tanrıdır.",
-            "qədim misir": "Qədim Misir — Nil çayının sahilində yaranmış, ehramları, fironları və sirli yazıları ilə seçilən qədim sivilizasiyadır.",
-            "vikinglər": "Vikinglər — Şimali Avropadan çıxan, dənizçilik bacarıqları və döyüşkənliyi ilə tanınan qədim skandinav tayfalarıdır.",
-            "aztekler": "Azteklər — Mərkəzi Amerikada inkişaf etmiş mədəniyyəti, memarlığı və qədim təqvimləri ilə tanınan sivilizasiyadır.",
-            "qədim roma": "Qədim Roma — Aralıq dənizi ətrafında nəhəng imperiya qurmuş, hüquq, memarlıq və hərbi sistemi ilə seçilən sivilizasiyadır.",
-            "mayya sivilizasiyası": "Mayya — Mərkəzi Amerikada inkişaf etmiş, dəqiq təqvimi, riyaziyyatı və sirli şəhərləri ilə tanınan qədim sivilizasiyadır.",
+            "poseydon": "Poseydon — yunan mifologiyasında dənizlərin və zəlzələlərin hökmdarıdır.",
 
-            // 🏎️ AVTOMOBİL BRENDLƏRİ VƏ MÜHƏNDİSLİK
+            // Avtomobillər
             "ferrari": "Ferrari — İtaliyanın məşhur idman avtomobilləri istehsalçısı və Formula 1 əfsanəsidir.",
             "lamborghini": "Lamborghini — aqressiv dizaynı və güclü mühərrikləri ilə tanınan İtalyan superkar markasıdır.",
-            "tesla": "Tesla — elektromobillər, avtonom idarəetmə sistemləri və təmiz enerji sahəsində lider olan qlobal texnologiya şirkətidir.",
-            "porsche": "Porsche — yüksək performanslı idman avtomobilləri və mühəndislik keyfiyyəti ilə tanınan Alman brendidir.",
-            "bugatti": "Bugatti — inanılmaz sürəti, lüks dizaynı və mühəndislik möcüzəsi olan mühərrikləri ilə tanınan hiperkar markasıdır.",
-            "rolls-royce": "Rolls-Royce — əl işi istehsalı, misilsiz rahatlığı və lüks sinfi ilə tanınan britaniyalı avtomobil markasıdır.",
-            "bmw": "BMW — Almaniyanın Bavariya bölgəsində yaranmış, 'Sürüş həzz' prinsipi ilə tanınan lüks avtomobil markasıdır.",
-            "mercedes-benz": "Mercedes-Benz — qabaqcıl texnologiyaları, rahatlığı və təhlükəsizlik sistemləri ilə seçilən Alman avtomobil nəhəngidir.",
-            "audi": "Audi — 'Vorsprung durch Technik' (Texnologiya ilə irəlidə) şüarı ilə tanınan dörd halqalı Alman avtomobil markasıdır.",
+            "tesla": "Tesla — elektromobillər və təmiz enerji sahəsində lider olan qlobal texnologiya şirkətidir.",
+            "bmw": "BMW — 'Sürüş həzz' prinsipi ilə tanınan lüks alman avtomobil markasıdır.",
+            "mercedes-benz": "Mercedes-Benz — qabaqcıl texnologiyaları və rahatlığı ilə seçilən alman avtomobil nəhəngidir.",
 
-            // 🌟 QLOBAL ÜNLÜLƏR VƏ ULDUZLAR
-            "leonardo di kaprio": "Leonardo Di Caprio — 'Titanik', 'Inception' və 'The Revenant' kimi şah əsərlərdө rol almış Oskar mükafatlı əfsanəvi Hollywood aktyorudur.",
-            "brad pitt": "Brad Pitt — dünya kino sənayesinin ən tanınmış simalarından biri, əfsanəvi Hollywood aktyoru və prodüseridir.",
-            "tom kruz": "Tom Cruise — 'Mission: Impossible' və 'Top Gun' filmlərindəki təhlükəli tryukları özü yerinə yetirməsi ilə tanınan dünya ulduzudur.",
-            "will smith": "Will Smith — həm komediya, həm də dram janrlarında uğur qazanmış məşhur amerikalı aktyor və musiqiçidir.",
-            "keanu reeves": "Keanu Reeves — 'Matrix' və 'John Wick' filmlərinin ulduzu, həmçinin təvazökar həyat tərzi ilə sevilən məşhurdur.",
-            "robert downey jr": "Robert Downey Jr. — Marvel-in 'Iron Man' obrazı ilə qlobal şöhrət qazanmış dahi aktyordur.",
-            "michael jackson": "Michael Jackson — musiqi tarixinin 'Pop Kralı' adlandırılan, mahnıları və rəqsləri ilə dünyanı dəyişdirən əfsanəvi sənətçidir.",
-            "billie eilish": "Billie Eilish — özünəməxsus səs tərzi və qlobal hitləri ilə müasir musiqi dünyasının ən parlaq ulduzlarından biridir.",
-            "the weeknd": "The Weeknd (Abel Tesfaye) — milyonlarla dinlənmə rekoru quran, 'Blinding Lights' kimi qlobal hitlərin sahibi olan kanadalı ulduzdur.",
-            "elon mask": "Elon Mask — SpaceX, Tesla və X (Twitter) platformalarının rəhbəri, gələcəyin texnologiyalarını formalaşdıran mühəndis və sahibkardır.",
+            // Ünlülər və Musiqi
+            "leonardo di kaprio": "Leonardo Di Caprio — 'Titanik' və 'Inception' kimi filmlərin ulduzu, Oskar mükafatlı aktyordur.",
+            "michael jackson": "Michael Jackson — musiqi tarixinin 'Pop Kralı' adlandırılan əfsanəvi sənətçisidir.",
+            "the beatles": "The Beatles — musiqi tarixini kökündən dəyişdirən dahi britaniyalı qrupdur.",
+            "queen": "Queen — Freddi Merkurinin unikal səsi ilə tanınan əfsanəvi rok qrupudur.",
+            "mozart": "Wolfgang Amadeus Mozart — klassik musiqi tarixinin ən dahi bəstəkarlarından biridir.",
 
-            // 🎸 ƏFSANƏVİ MUSİQİ QRUPLARI VƏ SƏNƏTÇİLƏR
-            "the beatles": "The Beatles — musiqi tarixini kökündən dəyişdirən, 'Hey Jude' və 'Let It Be' kimi əbədi hitlər yazan dahi britaniyalı qrupdur.",
-            "queen": "Queen — Freddi Merkurinin unikal səsi və epik mahnıları ('Bohemian Rhapsody') ilə tanınan əfsanəvi rok qrupudur.",
-            "pink floyd": "Pink Floyd — psixodelik musiqisi, fəlsəfi sözləri və əfsanəvi albomları ('The Dark Side of the Moon') ilə tanınan qrupdur.",
-            "mozart": "Wolfgang Amadeus Mozart — klassik musiqi tarixinin ən dahi bəstəkarlarından biri, uşaq yaşlarından musiqi bəstələyən dahi dahi pianoçudur.",
-            "bethoven": "Ludwig van Beethoven — eşitmə qabiliyyətini itirməsinə baxmayaraq bəşəriyyətə ölməz simfoniyalar (9-cu Simfoniya) bağışlayan dahi bəstəkardır.",
+            // Elm və Dahilər
+            "albert eynşteyn": "Albert Eynşteyn — fizika elmini kökündən dəyişdirən, nisbilik nəzəriyyəsinin müəllifi dahi fizikdir.",
+            "isaak nyuton": "İsaak Nyuton — klassik mexanikanın təməlini qoyan və cazibə qüvvəsini kəşf edən dahi alimdir.",
+            "nikola tesla": "Nikola Tesla — elektrik enerjisi və alternativ cərəyan sahəsində inqilab edən ixtiraçıdır.",
+            "stiven hokinq": "Stiven Hokinq — qara dəliklər və kosmologiya sahəsində dahi kəşflər etmiş fizikdir.",
+            "qara dəlik": "Qara dəlik — cazibə qüvvəsi səbəbindən işığın belə qaçıb qurtula bilmədiyi kosmik obyektdir.",
 
-            // 🌟 TARİXİ DAHİLƏR VƏ ELM ADAMLARI
-            "albert eynşteyn": "Albert Eynşteyn — fizika elmini kökündən dəyişdirən, nisbilik nəzəriyyəsinin müəllifi və bəşəriyyət tarixinin ən dahi fiziklərindən biridir.",
-            "isaak nyuton": "İsaak Nyuton — klassik mexanikanın təməlini qoyan, cazibə qüvvəsini kəşf edən dahi ingilis fizik və riyaziyyatçısıdır.",
-            "stiv cobs": "Stiv Cobs — Apple şirkətinin qurucusu, texnologiya dünyasına dizayn və innovasiya gətirən dahi vizyonerdir.",
-            "leonardo da vinçi": "Leonardo da Vinçi — İntibah dövrünün dahi rəssamı (Mona Liza), ixtiraçısı və universal dahi insanıdır.",
-            "nikola tesla": "Nikola Tesla — elektrik enerjisi, alternativ cərəyan və simsiz texnologiyalar sahəsində inqilab edən dahi ixtiraçıdır.",
-            "bill geyts": "Bill Geyts — Microsoft şirkətinin qurucusu, kompüter texnologiyalarının kütləviləşməsində mühüm rol oynamış sahibkardır.",
-            "stiven hokinq": "Stiven Hokinq — qara dəliklər, kosmologiya və kainatın yaranması sahəsində dahi kəşflər etmiş fiziki-nəzəriyyəçidir.",
-            "mari küri": "Marie Curie — radioaktivlik sahəsində tədqiqatlar aparmış, iki fərqli sahədə Nobel mükafatı qazanan yeganə elm qadınıdır.",
+            // İdman
+            "kriştiano ronaldo": "Kriştiano Ronaldo — rekordları alt-üst edən, intizamı və qol instinkti ilə seçilən qlobal idman əfsanəsidir.",
+            "lionel messi": "Lionel Messi — futbol tarixinin ən çox 'Qızıl Top' qazanan unikal oyunçusudur.",
+            "futbol məşqçiliyi": "Futbol məşqçiliyi — komandanın taktiki quruluşunu, fiziki hazırlığını və oyun intizamını idarə edən peşəkar fəaliyyətdir.",
+            "futbol": "Futbol — 11 oyunçudan ibarət iki komanda arasında strategiya və sürətə əsaslanan qlobal oyun növüdür.",
+            "basketbol": "Basketbol — səbətə top atmaq üzrə qurulan dinamik komanda idman növüdür.",
 
-            // ⚽ ƏFSANƏVİ FUTBOLÇULAR VƏ İDMAN
-            "kriştiano ronaldo": "Kriştiano Ronaldo — inanılmaz fiziki göstəriciləri, qol rekordları və sosial mediada 1 milyarddan çox izləçisi olan qlobal ulduzdur.",
-            "lionel messi": "Lionel Messi — futbol tarixinin ən çox 'Qızıl Top' qazanan, unikal driblinq qabiliyyətinə malik əfsanəvi futbolçudur.",
-            "pele": "Pele — futbol tarixində 3 dəfə Dünya Çempionu olan yeganə, 'Futbol Kralı' titullu əfsanəvi oyunçudur.",
-            "diyego maradona": "Diego Maradona — qeyri-adi istedadı və 'Tanrının əli' qolu ilə tanınan əfsanəvi argentinalı futbolçudur.",
-            "zinedin zidan": "Zinəddin Zidan — həm oyunçu, həm də məşqçi kimi futbol tarixə adını qızıl hərflərlə yazdıran əfsanədir.",
-            "futbol": "Futbol — 11 oyunçudan ibarət iki komanda arasında oynanan, taktika, fiziki dözümlülük və kollektiv oyuna əsaslanan qlobal idmandır.",
-            "məşqçilik": "Futbol məşqçiliyi — komandanın fiziki hazırlığını, taktiki intizamını, psixoloji dayanıqlığını və oyunçuların fərdi inkişafını idarə edən peşəkar fəaliyyətdir.",
-            "idman": "İdman — insan bədənini sağlam saxlayan, iradəni gücləndirən və gündəlik enerjini tənzimləyən fəaliyyətdir.",
-            "fiziki hazırlıq": "Fiziki hazırlıq — idmançının güc, sürət, dözümlülük və elastiklik göstəricilərini zirvəyə qaldıran məşq prosesidir.",
-            "basketbol": "Basketbol — səbətə top atmaq məqsədilə iki komanda arasında oynanan sürətli və dinamik komanda idman növüdür.",
+            // Ölkələr və Kodlar
+            "azerbaycan": "Azərbaycan — Cənubi Qafqazda yerləşən müstəqil dövlətdir. Paytaxtı Bakıdır. Beynəlxalq telefon kodu: +994.",
+            "türkiyə": "Türkiyə — Asiya və Avropanı birləşdirən strateji ölkədir. Beynəlxalq telefon kodu: +90.",
+            "yaponiya": "Yaponiya — qabaqcıl texnologiyaları ilə seçilən ada ölkəsidir. Telefon kodu: +81.",
+            "cənubi koreya": "Cənubi Koreya — Şərqi Asiyada yerləşən texnologiya mərkəzidir. Telefon kodu: +82.",
+            "çin": "Çin — nəhəng iqtisadiyyata malik qlobal dövlətdir. Telefon kodu: +86.",
+            "hollandiya": "Hollandiya (Niderland) — inkişaf etmiş Avropa ölkəsidir. Telefon kodu: +31.",
 
-            // 🌍 DÜNYA ÖLKƏLƏRİ VƏ BEYNƏLXALQ TELEFON KODLARI
-            "azerbaycan": "Azərbaycan Respublikası — Cənubi Qafqazda, Xəzər dənizinin sahilində yerləşən müstəqil dövlətdir. Paytaxtı Bakıdır. Beynəlxalq telefon kodu: +994.",
-            "baki": "Bakı — Azərbaycanın paytaxtı, Xəzər dənizinin sahilində yerləşən, qədim və müasir memarlığın vəhdəti olan meqapolisdir.",
-            "türkiyə": "Türkiyə Cümhuriyyəti — Asiya və Avropanı birləşdirən strateji ölkədir. Beynəlxalq telefon kodu: +90.",
-            "yaponiya": "Yaponiya — Qabaqcıl texnologiyaları, sürətli qatarları və unikal mədəniyyəti ilə seçilən ada ölkəsidir. Beynəlxalq telefon kodu: +81.",
-            "cənubi koreya": "Cənubi Koreya — Şərqi Asiyada yerləşən texnologiya və mədəniyyət mərkəzidir. Beynəlxalq telefon kodu: +82.",
-            "çin": "Çin Xalq Respublikası — Nəhəng iqtisadiyyata və qədim tarixə malik qlobal dövlətdir. Beynəlxalq telefon kodu: +86.",
-            "hollandiya": "Hollandiya (Niderland) — Kanalları, texnologiyaları və inkişaf etmiş iqtisadiyyatı ilə seçilən Avropa ölkəsidir. Beynəlxalq telefon kodu: +31.",
-            "rusiya": "Rusiya Federasiyası — Ərazisinə görə dünyanın ən böyük ölkəsidir, paytaxtı Moskvadır.",
-            "amerika": "Amerika Birləşmiş Ştatları (ABŞ) — Qlobal iqtisadiyyat, elm və texnologiya mərkəzidir.",
-            "almaniya": "Almaniya — Mühəndislik, avtomobil sənayesi və güclü iqtisadiyyatı ilə tanınan Avropa dövlətidir.",
-            "ingiltərə": "Birləşmiş Krallıq — Elm, maliyyə və futbolun vətəni olan ada dövlətidir.",
-            "fransa": "Fransa — İncəsənət, moda və mədəniyyət mərkəzi olan Avropa ölkəsidir.",
-            "italiya": "İtaliya — Qədim Roma irsi, memarlığı və mətbəxi ilə məşhur Aralıq dənizi ölkəsidir.",
-            "isveçrə": "İsveçrə — Alp dağları, bank sistemi, dəqiq saatları və şokoladı ilə seçilən ölkədir.",
-            "isveç": "İsveç — İnnovasiyaları, təbiəti və yüksək həyat standartları ilə seçilən Skandinaviya ölkəsidir.",
-            "sloveniya": "Sloveniya — Yaşıl təbiəti, Alp dağları və zəngin mədəniyyəti ilə seçilən Mərkəzi Avropa ölkəsidir.",
-            "kanada": "Kanada — Geniş təbiəti, yüksək həyat səviyyəsi və inkişaf etmiş iqtisadiyyatı ilə tanınan Şimali Amerika ölkəsidir.",
+            // Proqramlaşdırma
+            "python": "Python — süni intellekt və veb inkişafında ən çox istifadə edilən güclü dildir.",
+            "javascript": "JavaScript — veb səhifələrə interaktivlik qazandıran internetin əsas dilidir.",
+            "react": "React — interfeyslər yaratmaq üçün Meta tərəfindən hazırlanmış populyar kitabxanadır.",
+            "next.js": "Next.js — səhifə optimizasiyası təmin edən qabaqcıl React freymvorkudur.",
+            "github": "GitHub — proqramçıların kod bazalarını saxladığı və idarə etdiyi platformadır.",
+            "vercel": "Vercel — tətbiqləri bulud üzərində sürətlə yerləşdirmək üçün istifadə olunan platformadır.",
+            "bitcoin": "Bitcoin — blokçeyn texnologiyasına əsaslanan ilk rəqəmsal valyutadır.",
+            "süni intellekt": "Süni intellekt — kompüter sistemlərinin insan kimi düşünmək və öyrənmək qabiliyyətidir.",
 
-            // 💻 PROQRAMLAŞDIRMA VƏ VEB İNKİŞAF
-            "python": "Python — süni intellekt, data elmi, avtomatlaşdırma və veb inkişafında ən çox istifadə edilən güclü proqramlaşdırma dilidir.",
-            "javascript": "JavaScript — veb səhifələrə dinamiklik və interaktivlik qazandıran internetin əsas proqramlaşdırma dilidir.",
-            "html": "HTML — veb səhifələrin strukturunu və məzmununu təyin edən standart nişanlama dilidir.",
-            "css": "CSS — veb səhifələrin dizaynını, rənglərini, şriftlərini və vizual görünüşünü tənzimləyən üslub dilidir.",
-            "react": "React — istifadəçi interfeysləri yaratmaq üçün Meta tərəfindən hazırlanmış populyar JavaScript kitabxanasıdır.",
-            "next.js": "Next.js — səhifə optimizasiyası və server tərəfli renderinq təmin edən qabaqcıl React freymvorkudur.",
-            "github": "GitHub — proqramçıların kod bazalarını saxladığı, versiyaları idarə etdiyi və layihələrini paylaşdığı qlobal platformadır.",
-            "vercel": "Vercel — tətbiqləri bulud üzərində sürətlə yerləşdirmək (deploy) və idarə etmək üçün istifadə olunan platformadır.",
-            "süni intellekt": "Süni intellekt (AI) — kompüter sistemlərinin insan kimi düşünmək, öyrənmək, qərar vermək və yaradıcı işlər görmək qabiliyyətidir.",
-            "typescript": "TypeScript — JavaScript-ə güclü tip təhlükəsizliyi (types) əlavə edən qabaqcıl proqramlaşdırma dilidir.",
-            "nodejs": "Node.js — JavaScript kodunu server tərəfində icra etməyə imkan verən mühitdir.",
-            "git": "Git — proqram təminatının hazırlanması zamanı kod dəyişikliklərini izləmək üçün istifadə olunan paylanmış versiya nəzarət sistemidir.",
+            // Musiqi alətləri və Gündəlik
+            "akustik gitara": "Akustik gitara — polad simləri ilə gur səs çıxaran simli musiqi alətidir. Körpü mismarları (bridge pins) onun simlərini sabit saxlayır.",
+            "gerkules": "Gerkules (yulaf sıyığı) — süd, bal və qozla qəbul edildikdə bədənə uzunmüddətli enerji verən faydalı qidadır.",
+            "sloven dili": "Sloven dili — xüsusi ikilik qrammatik halı (dual) ilə seçilən slavyan dilidir."
+        };
 
-            // 🎸 MÜSİQİ VƏ GİTARA TEXNologiyası
-            "gitara": "Gitara — klassik, akustik, elektro və bas növləri olan məşhur simli musiqi alətidir.",
-            "akustik gitara": "Akustik gitara — polad simləri və rezonans gövdəsi sayəsində gur və parlaq səs çıxaran gitara növüdür.",
-            "körpü mismarları": "Körpü mismarları (bridge pins) — akustik gitara simlərini körpüdə möhkəm saxlayan kiçik mıxvari elementlərdir. Onları dəyişmək üçün xüsusi mismar çəkən alətlərdən istifadə olunur.",
-            "musiqi": "Musiqi — insan emosiyalarını səslər və melodiyalar vasitəsilə əks etdirən universal incəsənətdir.",
-            "piano": "Piano — həm klassik, həm də müasir musiqinin ən əsas və zəngin səslənməyə malik klavişli musiqi alətidir.",
-            "rok": "Rok musiqi — güclü gitara riffləri, dinamik ritmlər və üsyançı ruhu ilə seçilən qlobal musiqi janrıdır.",
+        function sendPreset(text) {
+            document.getElementById('user-input').value = text;
+            sendMsg();
+        }
 
-            // 🍎 SAĞLAM QİDALANMA VƏ HƏYAT TƏRZİ
-            "gerkules": "Gerkules (yulaf sıyığı) — tərkibində zəngin liflər olan, süd, bal və qozla birlikdə qəbul edildikdə bədənə uzunmüddətli enerji verən faydalı qidadır.",
-            "kofe": "Kofe — qovrulmuş kofe dənələrindən hazırlanan, oyanıqlıq və enerji verən məşhur içkidir.",
+        function sendMsg() {
+            const input = document.getElementById('user-input');
+            const container = document.getElementById('chat-container');
+            const text = input.value.trim();
+            if (!text) return;
 
-            // 🗣️ DİLÇİLİK VƏ XARİCİ DİLLƏR
-            "dilçilik": "Dilçilik — dillərin quruluşunu, tarixini, qrammatikasını və cəmiyyətdəki rolunu öyrənən elmdir.",
-            "sloven dili": "Sloven dili (slovenščina) — cənubi slavyan dillərinə daxildir və xüsusi ikilik qrammatik halı (dual) ilə seçilir.",
-            "ingilis dili": "İngilis dili — beynəlxalq ünsiyyət, elm və qlobal texnologiyanın əsas dilidir.",
-            "alman dili": "Alman dili — dəqiq qrammatik strukturu və mühəndislik terminologiyası ilə tanınan Avropa dilidir.",
+            container.innerHTML += `<div class="message user">${text}</div>`;
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
 
-            // 🚗 AVTOMOBİL VƏ MÜHƏNDİSLİK
-            "avtomobil": "Avtomobil — daxili yanma mühərriki və ya elektrik mühərriki ilə hərəkət edən təkərli nəqliyyat vasitəsidir.",
-            "mühəndislik": "Mühəndislik — elmi prinsipləri tətbiq edərək texnoloji sistemlər, maşınlar və strukturlar yaradan elm sahəsidir.",
+            setTimeout(() => {
+                const lower = text.toLowerCase();
+                let reply = "";
 
-            // 💼 İQTİSADİYYAT VƏ MALİYYƏ
-            "iqtisadiyyat": "İqtisadiyyat — məhdud resurslar şəraitində mal və xidmətlərin istehsalı, bölgüsü və istehlakını öyrənən elmdir.",
-            "pul": "Pul — əmtəə mübadiləsində universal dəyər ölçüsü və ödəniş vasitəsidir.",
+                // 1. Riyazi hesablamaların avtomatik həlli
+                if (/[0-9]/.test(lower) && (/[\+\-\*\/\^]/.test(lower))) {
+                    try {
+                        let cleanExpr = text.replace(/[^0-9+\-*/().]/g, '');
+                        if (cleanExpr.length > 0) {
+                            let result = eval(cleanExpr);
+                            reply = `Nəticə: ${result}`;
+                        }
+                    } catch (e) {}
+                }
 
-            // 🧠 PSİXOLOGİYA VƏ ZƏKA
-            "psixologiya": "Psixologiya — insan davranışını, düşüncə proseslərini, emosiyalarını və şüur mexanizmlərini öyrənən elmdir.",
-            "zəka": "Zəka — öyrənmək, məntiqi nəticə çıxarmaq, problemi həll etmək və
+                // 2. Bazadan axtarış
+                if (!reply) {
+                    for (let key in knowledgeBase) {
+                        if (lower.includes(key)) {
+                            reply = knowledgeBase[key];
+                            break;
+                        }
+                    }
+                }
+
+                // 3. Əgər tapılmasa
+                if (!reply) {
+                    reply = `Ofojero bazanı skan etdi: "${text}" mövzusu qeydə alındı. İstərsən bu məlumatı da dərhal əlavə edək!`;
+                }
+
+                container.innerHTML += `<div class="message ai">${reply}</div>`;
+                container.scrollTop = container.scrollHeight;
+            }, 300);
+        }
+    </script>
+</body>
+</html>
