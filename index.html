@@ -43,6 +43,11 @@
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
+            // "Düşünülür..." mesajı
+            const loadingId = 'loading-' + Date.now();
+            container.innerHTML += `<div class="message ai" id="${loadingId}">Ofojero düşünür...</div>`;
+            container.scrollTop = container.scrollHeight;
+
             try {
                 const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                     method: "POST",
@@ -57,17 +62,17 @@
                 });
 
                 const data = await res.json();
+                document.getElementById(loadingId).remove();
                 
-                if (data.choices && data.choices[0]) {
-                    container.innerHTML += `<div class="message ai">${data.choices[0].message.content}</div>`;
-                } else if (data.error) {
-                    // Əgər yenə açar xətası versə, sistem özü ağıllı cavab qaytaracaq ki, sayt dayanmasın
-                    container.innerHTML += `<div class="message ai">Ofojero: "${text}" dediyini başa düşdüm. Mükəmməl işləyirik!</div>`;
+                if (data.choices && data.choices[0] && data.choices[0].message) {
+                    const reply = data.choices[0].message.content;
+                    container.innerHTML += `<div class="message ai">${reply}</div>`;
                 } else {
-                    container.innerHTML += `<div class="message ai">Sualınız qəbul olundu.</div>`;
+                    container.innerHTML += `<div class="message ai">Sistemdən cavab alınarkən xəta baş verdi.</div>`;
                 }
             } catch (e) {
-                container.innerHTML += `<div class="message ai">Ofojero Intelligence aktivdir: "${text}" sorğunuz emal olundu.</div>`;
+                document.getElementById(loadingId).remove();
+                container.innerHTML += `<div class="message ai">Şəbəkə xətası baş verdi.</div>`;
             }
             container.scrollTop = container.scrollHeight;
         }
