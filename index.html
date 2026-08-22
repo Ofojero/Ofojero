@@ -20,26 +20,17 @@
     <header>Ofojero Intelligence</header>
     
     <div id="chat-container">
-        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Dünyanın tarixi, elmi, texnologiyası və ya istənilən digər mövzusunda sualını verə bilərsən.</div>
+        <div class="message ai">Salam! Mən Ofojero Intelligence sistemiyəm. Dünyanın tarixi, elmi və ya istənilən sirri haqqında soruşa bilərsən.</div>
     </div>
 
     <div id="input-area">
         <div class="input-wrapper">
-            <input type="text" id="user-input" placeholder="Dünyadan nə bilmək istəyirsən? Yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <input type="text" id="user-input" placeholder="Nə bilmək istəyirsən? Yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
             <button onclick="sendMsg()">Göndər</button>
         </div>
     </div>
 
     <script>
-        const globalDatabase = {
-            "kosmos": "Kosmos — kainatdakı bütün materiya, enerji, ulduzlar, qalaktikalar və planetlərin yerləşdiyi sonsuz fəzadır. Böyük Partlayış (Big Bang) nəticəsində təqribən 13.8 milyard il əvvəl yaranmışdır.",
-            "tarix": "Bəşər tarixi qədim sivilizasiyalardan (Sümer, Misir, Qədim Roma), orta əsr imperiyalarından, intibah dövründən və müasir texnologiya əsrindən keçərək günümüzə qədər gəlib çatmışdır.",
-            "elm": "Elm — təbiətin və cəmiyyətin qanunauyğunluqlarını öyrənən, sübuta və təcrübələrə əsaslanan sistemli biliklər toplusudur. Fizika, kimya, biologiya və riyaziyyat əsas elm sahələridir.",
-            "texnologiya": "Texnologiya — elmi biliklərin praktiki həyatda tətbiqi, maşınlar, kompüterlər, süni intellekt və rəqəmsal sistemlərin yaradılması prosesidir.",
-            "azerbaycan": "Azərbaycan — Qafqazın cənubunda yerləşən, zəngin təbii sərvətlərə (neft, qaz), qədim mədəniyyətə və strateji coğrafi mövqeyə malik respublikadır.",
-            "dünya": "Yer kürəsi — Günəş sistemində həyatın mövcud olduğu məlum olan yeganə planetdir. Səthinin təqribən 71%-i sudan, 29%-i isə quru sahələrindən ibarətdir."
-        };
-
         function sendMsg() {
             const input = document.getElementById('user-input');
             const container = document.getElementById('chat-container');
@@ -51,18 +42,19 @@
             container.scrollTop = container.scrollHeight;
 
             setTimeout(() => {
-                const lowerText = text.toLowerCase();
+                const lower = text.toLowerCase();
                 let reply = "";
 
-                for (let key in globalDatabase) {
-                    if (lowerText.includes(key)) {
-                        reply = globalDatabase[key];
-                        break;
-                    }
-                }
-
-                if (!reply) {
-                    reply = `Ofojero Intelligence qlobal bazası yoxlayır: "${text}" haqqında dünyada bir çox məlumat mövcuddur. Bu mövzu elm, tarix və ya müasir həyatla sıx bağlıdır. Sənə bu haqda daha dəqiq hansı tərəfini izah edim?`;
+                if (lower.includes("tarix") || lower.includes("olub") || lower.includes("keçmiş")) {
+                    reply = "Dünya tarixi milyillik imperiyaların, müharibələrin, böyük kəşflərin və sivilizasiyaların yaranıb-sönməsi tarixidir. Qədim Misir, Mesopotamiya, Roma imperiyası və Böyük İpək Yolu bəşəriyyətin gedişatını dəyişdirən əsas mərhələlərdəndir.";
+                } else if (lower.includes("adın") || lower.includes("kimsən") || lower.includes("necə")) {
+                    reply = "Mən Ofojero Intelligence — sənin yaratdığın güclü və universal süni intellekt sistemiyəm!";
+                } else if (lower.includes("elm") || lower.includes("kosmos") || lower.includes("fizika")) {
+                    reply = "Elm və kainat sirrlərlə doludur. Kainat təqribən 13.8 milyard il əvvəl Böyük Partlayışla yaranıb və sürətlə genişlənir. Qara dəliklər, ulduz sistemləri və kvant fizikası dünyanın ən maraqlı mövzularındandır.";
+                } else if (lower.includes("dünya") || lower.includes("həyat")) {
+                    reply = "Yer kürəsi Günəş sistemində üzərində həyat olan yeganə planetdir. Burada milyonlarla canlı növü, müxtəlif mədəniyyətlər və fasiləsiz inkişaf edən sivilizasiya mövcuddur.";
+                } else {
+                    reply = `Ofojero Intelligence analiz edir: Sənin bu sualın ("${text}") kainatın, elmin və ya tarixin ən maraqlı qatlarına toxunur. Hər şey bir başlanğıc ilə başlayır və dünyada hər zaman öyrənilməli saysız-hesabsız sirr var!`;
                 }
 
                 container.innerHTML += `<div class="message ai">${reply}</div>`;
