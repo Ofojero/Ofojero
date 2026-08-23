@@ -2,6 +2,7 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ofojero</title>
     <style>
         :root {
@@ -22,9 +23,8 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
         }
 
         header {
@@ -39,6 +39,7 @@
             letter-spacing: 0.5px;
             color: var(--accent);
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            flex-shrink: 0;
         }
 
         .header-actions {
@@ -128,6 +129,7 @@
             display: flex;
             justify-content: center;
             border-top: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
         .input-wrapper {
@@ -206,7 +208,7 @@
     <div id="input-area">
         <div class="input-wrapper">
             <button class="action-icon-btn" id="mic-btn" onclick="toggleSpeechRecognition()" title="Səslə danış">🎤</button>
-            <input type="text" id="user-input" placeholder="İstənilən dildə, mövzuda nəsə yazın..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <input type="text" id="user-input" placeholder="" onkeydown="handleKeyDown(event)">
             <button class="send-btn" onclick="sendMsg()">Göndər</button>
         </div>
     </div>
@@ -343,5 +345,4 @@
 
         function speakText(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthe
+                window.speechSynthesis.cancel
