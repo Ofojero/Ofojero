@@ -2,7 +2,7 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <title>Ofojero - Infinity Maximus AI</title>
+    <title>Ofojero</title>
     <style>
         :root {
             --bg-deep: #030407;
@@ -122,35 +122,6 @@
         }
         .tts-btn:hover { color: var(--accent); }
 
-        .quick-topics {
-            display: flex;
-            gap: 10px;
-            padding: 0 24px 12px 24px;
-            max-width: 1050px;
-            margin: 0 auto;
-            width: 100%;
-            box-sizing: border-box;
-            overflow-x: auto;
-        }
-
-        .topic-pill {
-            background: var(--bg-panel);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
-
-        .topic-pill:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--bg-input);
-        }
-
         #input-area {
             padding: 20px 24px;
             background: var(--bg-panel);
@@ -222,7 +193,7 @@
 </head>
 <body>
     <header>
-        <span>Ofojero AI (Infinity Maximus Edition)</span>
+        <span>Ofojero</span>
         <div class="header-actions">
             <button class="icon-btn" onclick="clearHistory()" title="Söhbəti təmizlə">🗑️ Tarixçəni Sil</button>
         </div>
@@ -230,14 +201,6 @@
     
     <div id="chat-container">
         <!-- Mesajlar bura yüklənəcək -->
-    </div>
-
-    <div class="quick-topics">
-        <div class="topic-pill" onclick="askTopic('Azərbaycan dili')">🌍 Dillər</div>
-        <div class="topic-pill" onclick="askTopic('Python')">💻 Proqramlaşdırma</div>
-        <div class="topic-pill" onclick="askTopic('Interstellar')">🎬 Kino</div>
-        <div class="topic-pill" onclick="askTopic('Ferrari')">🏎️ Avtomobil</div>
-        <div class="topic-pill" onclick="askTopic('Zevs')">⚡ Mifologiya</div>
     </div>
 
     <div id="input-area">
@@ -249,7 +212,7 @@
     </div>
 
     <script>
-        // BÜTÜN DÜNYA DİLLƏRİ, KİNO, MİFOLOGİYA, ÖLKƏLƏR, ELM VƏ TEXNOLOGİYA BAZASI (TAM VƏ HEç BİR İXTİSAR OLMADAN)
+        // BÜTÜN DÜNYA DİLLƏRİ, KİNO, MİFOLOGİYA, ÖLKƏLƏR, ELM VƏ TEXNOLOGİYA BAZASI
         const maximusDatabase = {
             // 🤖 SALAMLAMA VƏ ÜMUMİ
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
@@ -304,7 +267,7 @@
             "lord of the rings": "The Lord of the Rings (Üzüklərin Hökmdarı) — J.R.R. Tolkien-in əsəri əsasında çəkilmiş, fantastika və orta əsr epik mübarizəsindən bəhs edən şah əsərdir.",
             "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdir.",
 
-            // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİLİZASİYALAR
+            // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİZASİYALAR
             "zevs": "Zevs — yunan mifologiyasında tanrıların və insanların atası, Olimpin hökmdarı və şimşək tanrısıdır.",
             "tor": "Tor — skandinaviya mifologiyasında çəkici ilə tanınan güclü şimşək və fırtına tanrısıdır.",
             "poseydon": "Poseydon — yunan mifologiyasında dənizlərin, zəlzələlərin və atların hökmdarı olan qüdrətli tanrıdır.",
@@ -350,4 +313,35 @@
             "cənubi koreya": "Cənubi Koreya — Şərqi Asiyada yerləşən texnologiya və mədəniyyət mərkəzidir. Beynəlxalq telefon kodu: +82.",
             "çin": "Çin Xalq Respublikası — Nəhəng iqtisadiyyata və qədim tarixə malik qlobal dövlətdir. Beynəlxalq telefon kodu: +86.",
             "hollandiya": "Hollandiya (Niderland) — Kanalları, texnologiyaları və inkişaf etmiş iqtisadiyyatı ilə seçilən Avropa ölkəsidir. Beynəlxalq telefon kodu: +31.",
-            "rusiya"
+            "rusiya": "Rusiya Federasiyası — Dünyanın ən böyük ərazisinə malik Avrasiya dövlətidir. Paytaxtı Moskvadır. Beynəlxalq telefon kodu: +7."
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadHistory();
+        });
+
+        function loadHistory() {
+            const container = document.getElementById('chat-container');
+            const savedHistory = localStorage.getItem('ofojero_history');
+            if (savedHistory) {
+                container.innerHTML = savedHistory;
+            } else {
+                container.innerHTML = `<div class="message ai">Salam! Mən Ofojero-yam. Sualınızı gözləyirəm.</div>`;
+            }
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function saveHistory() {
+            const container = document.getElementById('chat-container');
+            localStorage.setItem('ofojero_history', container.innerHTML);
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('ofojero_history');
+            document.getElementById('chat-container').innerHTML = `<div class="message ai">Tarixçə təmizləndi.</div>`;
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthe
