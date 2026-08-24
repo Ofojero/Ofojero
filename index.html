@@ -197,7 +197,7 @@
     <header>
         <span>Ofojero</span>
         <div class="header-actions">
-            <button class="icon-btn" onclick="clearHistory()" title="Söhbəti təmizlə">🗑️ Tarixçəni Sil</button>
+            <button class="icon-btn" id="clear-btn" title="Söhbəti təmizlə">🗑️ Tarixçəni Sil</button>
         </div>
     </header>
     
@@ -207,16 +207,15 @@
 
     <div id="input-area">
         <div class="input-wrapper">
-            <button class="action-icon-btn" id="mic-btn" onclick="toggleSpeechRecognition()" title="Səslə danış">🎤</button>
-            <input type="text" id="user-input" placeholder="Mesajınızı yazın..." onkeydown="handleKeyDown(event)">
-            <button class="send-btn" onclick="sendMsg()">Göndər</button>
+            <button class="action-icon-btn" id="mic-btn" title="Səslə danış">🎤</button>
+            <input type="text" id="user-input" placeholder="Mesajınızı yazın...">
+            <button class="send-btn" id="send-btn">Göndər</button>
         </div>
     </div>
 
     <script>
         // BÜTÜN DÜNYA DİLLƏRİ, KİNO, MİFOLOGİYA, ÖLKƏLƏR, ELM VƏ TEXNOLOGİYA BAZASI
         const maximusDatabase = {
-            // 🤖 SALAMLAMA VƏ ÜMUMİ
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
             "hello": "Hello! Ofojero AI is fully operational with complete, uncompressed global language and knowledge packages.",
             "privet": "Привет! Офоджеро работает на максимальной и полной базе знаний без каких-либо сокращений.",
@@ -320,6 +319,16 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             loadHistory();
+
+            // Düymələrə birbaşa event listener qoşuruq ki, hər hansı bir klik problemi yaşanmasın
+            document.getElementById('send-btn').addEventListener('click', sendMsg);
+            document.getElementById('clear-btn').addEventListener('click', clearHistory);
+            document.getElementById('mic-btn').addEventListener('click', toggleSpeechRecognition);
+            document.getElementById('user-input').addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    sendMsg();
+                }
+            });
         });
 
         function loadHistory() {
@@ -334,15 +343,4 @@
         }
 
         function saveHistory() {
-            const container = document.getElementById('chat-container');
-            localStorage.setItem('ofojero_history', container.innerHTML);
-        }
-
-        function clearHistory() {
-            localStorage.removeItem('ofojero_history');
-            document.getElementById('chat-container').innerHTML = `<div class="message ai">Tarixçə təmizləndi.</div>`;
-        }
-
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.spe
+            const container = docu
