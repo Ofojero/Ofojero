@@ -187,7 +187,6 @@
             font-weight: 600;
             font-size: 1rem;
             transition: background 0.2s, transform 0.1s;
-            -webkit-tap-highlight-color: transparent;
         }
 
         button.send-btn:hover { background: var(--accent-hover); }
@@ -210,12 +209,12 @@
         <div class="input-wrapper">
             <button class="action-icon-btn" id="mic-btn" onclick="toggleSpeechRecognition()" title="Səslə danış">🎤</button>
             <input type="text" id="user-input" placeholder="" onkeydown="handleKeyDown(event)">
-            <button class="send-btn" id="send-btn-element">Göndər</button>
+            <button class="send-btn" onclick="sendMsg()">Göndər</button>
         </div>
     </div>
 
     <script>
-        // OFOJERO MAKSİMAL GENİŞLƏNDİRİLMİŞ BAZASI
+        // BÜTÜN DÜNYA DİLLƏRİ, KİNO, MİFOLOGİYA, ÖLKƏLƏR, ELM VƏ TEXNOLOGİYA BAZASI
         const maximusDatabase = {
             // 🤖 SALAMLAMA VƏ ÜMUMİ
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
@@ -228,18 +227,7 @@
             "adın nədir": "Mən Ofojero — universal dil və bilik sistemiyəm.",
             "kimsən": "Mən Ofojeroyam; dünya dilləri, elm, texnologiya, kino, mifologiya, coğrafiya və proqramlaşdırma üzrə heç bir məhdudiyyəti olmayan ən geniş sisteməm.",
 
-            // 💻 PROQRAMLAŞDIRMA VƏ TEXNOLOGİYA
-            "react": "React — istifadəçi interfeysləri yaratmaq üçün Facebook tərəfindən hazırlanmış populyar JavaScript kitabxanasıdır.",
-            "next.js": "Next.js — səhifə server tərəfli renderinq (SSR) və sürətli veb tətbiqlər qurmağa imkan verən güclü React freymvorkudur.",
-            "javascript": "JavaScript — veb səhifələrə interaktivlik qatan, həm frontend, həm də backend sahəsində istifadə olunan əsas proqramlaşdırma dilidir.",
-            "python": "Python — sadə sintaksisə malik, süni intellekt, məlumat elmi və avtomatlaşdırma sahələrində geniş istifadə olunan dildir.",
-            "html": "HTML — veb səhifələrin strukturunu və məzmununu təyin edən əsas işarələmə dilidir.",
-            "css": "CSS — veb səhifələrin dizaynını, rənglərini və vizual görünüşünü tənzimləyən üslub dilidir.",
-            "git": "Git — layihələrin versiyalarını idarə etmək və komanda ilə işləmək üçün istifadə olunan güclü sistemdir.",
-            "github": "GitHub — Git repozitoriyalarını buludda saxlamaq və açıq mənbəli layihələri idarə etmək üçün qlobal platformadır.",
-            "vercel": "Vercel — veb layihələrini və Next.js tətbiqlərini sürətli şəkildə buludda yerləşdirmək (deploy) üçün ən yaxşı platformadır.",
-
-            // 🗣️ DÜNYA DİLLƏRİNİN TAM SİYAHISI
+            // 🗣️ DÜNYA DİLLƏRİNİN TAM VƏ ƏTRAFLI SİYAHISI
             "azərbaycan dili": "Azərbaycan dili — türk dilləri ailəsinin oğuz qrupuna daxil olan, latın qrafikası ilə yazılan dövlət dilimizdir.",
             "ingilis dili": "English (İngilis dili) — qlobal miqyasda ünsiyyət, elm, internet, aviasiya və biznesin əsas beynəlxalq dilidir.",
             "rus dili": "Русский язык (Rus dili) — slavyan dilləri qrupuna daxil olan, BMT-nin rəsmi dillərindən biri və dünyada geniş danışılan dildir.",
@@ -264,7 +252,7 @@
             "niderland dili": "Nederlands (Niderland dili) — german dilləri qrupuna daxil olan, Hollandiya və Belçikada danışılan dildir.",
             "vyetnam dili": "Tiếng Việt (Vyetnam dili) — Cənub-Şərqi Asiyada danışılan, altı fərqli ton sisteminə malik rəsmi dildir.",
 
-            // 🎬 KULT KİNO VƏ SERIALAR
+            // 🎬 KULT KİNO, SERIALAR VƏ ANİMASİYALAR
             "breaking bad": "Breaking Bad — kimya müəlliminin narkotik imperiyası qurmasından bəhs edən televiziya tarixinin ən yaxşı dram seriallarından biridir.",
             "game of thrones": "Game of Thrones (Taxt-tac oyunları) — siyasi intriqalar, əjdahalar və səltənət mübarizələri ilə dolu kult fantastik serialdır.",
             "interstellar": "Interstellar (Ulduzlararası) — qurd dəlikləri, nisbilik və zaman səyahətindən bəhs edən Christopher Nolan-ın dahi filmidir.",
@@ -281,7 +269,7 @@
             "lord of the rings": "The Lord of the Rings (Üzüklərin Hökmdarı) — J.R.R. Tolkien-in əsəri əsasında çəkilmiş, fantastika və orta əsr epik mübarizəsindən bəhs edən şah əsərdir.",
             "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdir.",
 
-            // ⚡ MİFOLOGİYA VƏ TARİX
+            // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİZASİYALAR
             "zevs": "Zevs — yunan mifologiyasında tanrıların və insanların atası, Olimpin hökmdarı və şimşək tanrısıdır.",
             "tor": "Tor — skandinaviya mifologiyasında çəkici ilə tanınan güclü şimşək və fırtına tanrısıdır.",
             "poseydon": "Poseydon — yunan mifologiyasında dənizlərin, zəlzələlərin və atların hökmdarı olan qüdrətli tanrıdır.",
@@ -292,7 +280,7 @@
             "vikinglər": "Vikinglər — Şimali Avropadan çıxan, dənizçilik bacarıqları və döyüşkənliyi ilə tanınan qədim skandinav tayfalarıdır.",
             "qədim roma": "Qədim Roma — Aralıq dənizi ətrafında nəhəng imperiya qurmuş, hüquq, memarlıq və hərbi sistemi ilə seçilən sivilizasiyadır.",
 
-            // 🏎️ AVTOMOBİL VƏ TEXNOLOGİYA
+            // 🏎️ AVTOMOBİL BRENDLƏRİ VƏ MÜHƏNDİSLİK
             "ferrari": "Ferrari — İtaliyanın məşhur idman avtomobilləri istehsalçısı və Formula 1 əfsanəsidir.",
             "lamborghini": "Lamborghini — aqressiv dizaynı və güclü mühərrikləri ilə tanınan İtalyan superkar markasıdır.",
             "tesla": "Tesla — elektromobillər, avtonom idarəetmə sistemləri və təmiz enerji sahəsində lider olan qlobal texnologiya şirkətidir.",
@@ -302,7 +290,24 @@
             "bmw": "BMW — Almaniyanın Bavariya bölgəsində yaranmış, 'Sürüş həzz' prinsipi ilə tanınan lüks avtomobil markasıdır.",
             "mercedes-benz": "Mercedes-Benz — qabaqcıl texnologiyaları, rahatlığı və təhlükəsizlik sistemləri ilə seçilən Alman avtomobil nəhəngidir.",
 
-            // 🌍 ÖLKƏLƏR VƏ KODLAR
+            // 🌟 QLOBAL ÜNLÜLƏR VƏ ULDUZLAR
+            "leonardo di kaprio": "Leonardo Di Caprio — 'Titanik', 'Inception' və 'The Revenant' kimi şah əsərlərdə rol almış Oskar mükafatlı əfsanəvi Hollywood aktyorudur.",
+            "brad pitt": "Brad Pitt — dünya kino sənayesinin ən tanınmış simalarından biri, əfsanəvi Hollywood aktyoru və prodüseridir.",
+            "tom kruz": "Tom Cruise — 'Mission: Impossible' və 'Top Gun' filmlərindəki təhlükəli tryukları özü yerinə yetirməsi ilə tanınan dünya ulduzudur.",
+            "will smith": "Will Smith — həm komediya, həm də dram janrlarında uğur qazanmış məşhur amerikalı aktyor və musiqiçidir.",
+            "keanu reeves": "Keanu Reeves — 'Matrix' və 'John Wick' filmlərinin ulduzu, həmçinin təvazökar həyat tərzi ilə sevilən məşhurdur.",
+            "elon mask": "Elon Mask — SpaceX, Tesla və X (Twitter) platformalarının rəhbəri, gələcəyin texnologiyalarını formalaşdıran mühəndis və sahibkardır.",
+            "cristiano ronaldo": "Cristiano Ronaldo — futbol tarixinin ən çox qol vuran oyunçularından biri, 5 qat 'Qızıl Top' sahibidir.",
+            "lionel messi": "Lionel Messi — unikal driblinq bacarığı və rekord sayda 'Qızıl Top' mükafatı ilə futbol tarixinin dahi simasıdır.",
+
+            // 🌟 TARİXİ DAHİLƏR VƏ ELM ADAMARI
+            "albert eynşteyn": "Albert Eynşteyn — fizika elmini kökündən dəyişdirən, nisbilik nəzəriyyəsinin müəllifi və bəşəriyyət tarixinin ən dahi fiziklərindən biridir.",
+            "isaak nyuton": "İsaak Nyuton — klassik mexanikanın təməlini qoyan, cazibə qüvvəsini kəşf edən dahi ingilis fizik və riyaziyyatçısıdır.",
+            "stiv cobs": "Stiv Cobs — Apple şirkətinin qurucusu, texnologiya dünyasına dizayn və innovasiya gətirən dahi vizyonerdir.",
+            "leonardo da vinçi": "Leonardo da Vinçi — İntibah dövrünün dahi rəssamı (Mona Liza), ixtiraçısı və universal dahi insanıdır.",
+            "nikola tesla": "Nikola Tesla — elektrik enerjisi, alternativ cərəyan və simsiz texnologiyalar sahəsində inqilab edən dahi ixtiraçıdır.",
+
+            // 🌍 DÜNYA ÖLKƏLƏRİ VƏ BEYNƏLXALQ TELEFON KODLARI
             "azerbaycan": "Azərbaycan Respublikası — Cənubi Qafqazda, Xəzər dənizinin sahilində yerləşən müstəqil dövlətdir. Paytaxtı Bakıdır. Beynəlxalq telefon kodu: +994.",
             "baki": "Bakı — Azərbaycanın paytaxtı, Xəzər dənizinin sahilində yerləşən, qədim və müasir memarlığın vəhdəti olan meqapolisdir.",
             "türkiyə": "Türkiyə Cümhuriyyəti — Asiya və Avropanı birləşdirən strateji ölkədir. Beynəlxalq telefon kodu: +90.",
@@ -315,18 +320,6 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             loadHistory();
-            
-            const sendBtn = document.getElementById('send-btn-element');
-            if (sendBtn) {
-                sendBtn.onclick = function(e) {
-                    e.preventDefault();
-                    sendMsg();
-                };
-                sendBtn.ontouchend = function(e) {
-                    e.preventDefault();
-                    sendMsg();
-                };
-            }
         });
 
         function loadHistory() {
@@ -352,15 +345,4 @@
 
         function speakText(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'az-AZ';
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        function toggleSpeechRecognition() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) return;
-
-            const recog
+                window.speechSynthesis.cancel
