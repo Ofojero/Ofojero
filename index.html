@@ -208,7 +208,7 @@
     <div id="input-area">
         <div class="input-wrapper">
             <button class="action-icon-btn" id="mic-btn" onclick="toggleSpeechRecognition()" title="Səslə danış">🎤</button>
-            <input type="text" id="user-input" placeholder="" onkeydown="handleKeyDown(event)">
+            <input type="text" id="user-input" placeholder="Mesajınızı yazın..." onkeydown="handleKeyDown(event)">
             <button class="send-btn" onclick="sendMsg()">Göndər</button>
         </div>
     </div>
@@ -345,4 +345,4 @@
 
         function speakText(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel
+                window.spe
