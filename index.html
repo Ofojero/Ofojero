@@ -214,7 +214,6 @@
     </div>
 
     <script>
-        // BÜTÜN DÜNYA DİLLƏRİ, KİNO, MİFOLOGİYA, ÖLKƏLƏR, ELM VƏ TEXNOLOGİYA BAZASI
         const maximusDatabase = {
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
             "hello": "Hello! Ofojero AI is fully operational with complete, uncompressed global language and knowledge packages.",
@@ -266,7 +265,7 @@
             "oppenheimer": "Oppenheimer — atom bombasının yaradılma prosesini və fizir Robert Oppenheimerin həyatını izah edən Oskar mükafatlı filmdir.",
             "peaky blinders": "Peaky Blinders — Birinci Dünya Müharibəsindən sonra Birminhem şəhərində fəaliyyət göstərən quldur dəstəsindən bəhs edən kult britan serialıdır.",
             "lord of the rings": "The Lord of the Rings (Üzüklərin Hökmdarı) — J.R.R. Tolkien-in əsəri əsasında çəkilmiş, fantastika və orta əsr epik mübarizəsindən bəhs edən şah əsərdir.",
-            "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdır.",
+            "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdir.",
 
             // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİZASİYALAR
             "zevs": "Zevs — yunan mifologiyasında tanrıların və insanların atası, Olimpin hökmdarı və şimşək tanrısıdır.",
@@ -343,4 +342,8 @@
 
         function saveHistory() {
             const container = document.getElementById('chat-container');
-            localStorage.setItem('ofojero_history', containe
+            localStorage.setItem('ofojero_history', container.innerHTML);
+        }
+
+        function clearHistory() {
+            localStorage.r
