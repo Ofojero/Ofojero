@@ -307,7 +307,7 @@
             }
         }
 
-        function sendMsg() {
+       function sendMsg() {
             const input = document.getElementById('user-input');
             const text = input.value.trim();
             if (!text) return;
@@ -326,16 +326,34 @@
                 const query = text.toLowerCase();
                 let matchedResponses = [];
 
-                // Bütün bazanı yoxlayır və uyğun gələnlərin HAMISINI toplayır
+                // Bazadakı hər bir açar sözü yoxlayırıq
                 for (let key in maximusDatabase) {
+                    // Əgər istifadəçinin yazdığı mətndə həmin açar söz varsa VƏ YA əksinə
                     if (query.includes(key)) {
-                        matchedResponses.push(maximusDatabase[key]);
+                        if (!matchedResponses.includes(maximusDatabase[key])) {
+                            matchedResponses.push(maximusDatabase[key]);
+                        }
+                    }
+                }
+
+                // Əgər tam söz tapılmadısa, cümləni sözlərə bölüb tək-tək yoxlayaq (səhvləri tutmaq üçün)
+                if (matchedResponses.length === 0) {
+                    const words = query.split(" ");
+                    for (let word of words) {
+                        if (word.length > 2) { // 3 hərfdən qısa sözləri ötürək
+                            for (let key in maximusDatabase) {
+                                if (key.includes(word) || word.includes(key)) {
+                                    if (!matchedResponses.includes(maximusDatabase[key])) {
+                                        matchedResponses.push(maximusDatabase[key]);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
                 let aiResponse = "";
                 if (matchedResponses.length > 0) {
-                    // Tapılan bütün cavabları bir-birinə birləşdirir
                     aiResponse = matchedResponses.join("<br><br>");
                 } else {
                     aiResponse = "Bu mövzu haqqında məlumat bazamda yoxdur, lakin Ofojero sistemi daim yenilənir!";
