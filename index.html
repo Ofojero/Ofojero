@@ -266,7 +266,7 @@
             "oppenheimer": "Oppenheimer — atom bombasının yaradılma prosesini və fizir Robert Oppenheimerin həyatını izah edən Oskar mükafatlı filmdir.",
             "peaky blinders": "Peaky Blinders — Birinci Dünya Müharibəsindən sonra Birminhem şəhərində fəaliyyət göstərən quldur dəstəsindən bəhs edən kult britan serialıdır.",
             "lord of the rings": "The Lord of the Rings (Üzüklərin Hökmdarı) — J.R.R. Tolkien-in əsəri əsasında çəkilmiş, fantastika və orta əsr epik mübarizəsindən bəhs edən şah əsərdir.",
-            "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdir.",
+            "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdır.",
 
             // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİZASİYALAR
             "zevs": "Zevs — yunan mifologiyasında tanrıların və insanların atası, Olimpin hökmdarı və şimşək tanrısıdır.",
@@ -308,7 +308,7 @@
 
             // 🌍 DÜNYA ÖLKƏLƏRİ VƏ BEYNƏLXALQ TELEFON KODLARI
             "azerbaycan": "Azərbaycan Respublikası — Cənubi Qafqazda, Xəzər dənizinin sahilində yerləşən müstəqil dövlətdir. Paytaxtı Bakıdır. Beynəlxalq telefon kodu: +994.",
-            "baki": "Bakı — Azərbaycanın paytaxtı, Xəzər dənizinin sahilində yerləşən, qədim və müasir memarlığın vəhdəti olan meqapolisdir.",
+            "baki": "Bakı — Azərbaycanın paytaxtı, Xəzər dənizinin sahilində yerləşən, qədim və müasir memarlığın vəhdəti olan meqapolisdır.",
             "türkiyə": "Türkiyə Cümhuriyyəti — Asiya və Avropanı birləşdirən strateji ölkədir. Beynəlxalq telefon kodu: +90.",
             "yaponiya": "Yaponiya — Qabaqcıl texnologiyaları, sürətli qatarları və unikal mədəniyyəti ilə seçilən ada ölkəsidir. Beynəlxalq telefon kodu: +81.",
             "cənubi koreya": "Cənubi Koreya — Şərqi Asiyada yerləşən texnologiya və mədəniyyət mərkəzidir. Beynəlxalq telefon kodu: +82.",
@@ -320,7 +320,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             loadHistory();
 
-            // Düymələrə birbaşa event listener qoşuruq ki, hər hansı bir klik problemi yaşanmasın
             document.getElementById('send-btn').addEventListener('click', sendMsg);
             document.getElementById('clear-btn').addEventListener('click', clearHistory);
             document.getElementById('mic-btn').addEventListener('click', toggleSpeechRecognition);
@@ -343,4 +342,5 @@
         }
 
         function saveHistory() {
-            const container = docu
+            const container = document.getElementById('chat-container');
+            localStorage.setItem('ofojero_history', containe
