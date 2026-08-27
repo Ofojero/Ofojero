@@ -35,15 +35,9 @@
             border-bottom: 1px solid var(--border);
             font-size: 1.3rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
             color: var(--accent);
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             flex-shrink: 0;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
         }
 
         .icon-btn {
@@ -54,7 +48,6 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: all 0.2s;
         }
 
         .icon-btn:hover {
@@ -83,13 +76,7 @@
             line-height: 1.6;
             word-break: break-word;
             font-size: 1.02rem;
-            animation: fadeIn 0.3s ease-out;
             position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .user {
@@ -97,7 +84,6 @@
             align-self: flex-end;
             color: white;
             border-bottom-right-radius: 4px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
         }
 
         .ai {
@@ -106,7 +92,6 @@
             color: var(--text-main);
             border: 1px solid var(--border);
             border-bottom-left-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .tts-btn {
@@ -118,7 +103,6 @@
             color: var(--text-muted);
             cursor: pointer;
             font-size: 0.8rem;
-            padding: 2px 6px;
         }
         .tts-btn:hover { color: var(--accent); }
 
@@ -140,12 +124,6 @@
             border-radius: 35px;
             border: 1px solid var(--border);
             padding: 6px 12px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .input-wrapper:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
         }
 
         input {
@@ -169,32 +147,26 @@
             background: var(--accent);
             color: var(--bg-deep);
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             border: none;
-            transition: background 0.2s, transform 0.1s;
         }
 
         button.send-btn:hover { background: var(--accent-hover); }
-        button.send-btn:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
     <header>
         <span>Ofojero</span>
-        <div class="header-actions">
-            <button class="icon-btn" id="clear-btn" title="Söhbəti təmizlə">🗑️ Tarixçəni Sil</button>
-        </div>
+        <button class="icon-btn" id="clear-btn" onclick="clearHistory()">🗑️ Tarixçəni Sil</button>
     </header>
     
-    <div id="chat-container">
-        <!-- Mesajlar bura yüklənəcək -->
-    </div>
+    <div id="chat-container"></div>
 
     <div id="input-area">
         <div class="input-wrapper">
-            <input type="text" id="user-input" placeholder="Ofojero`ya sorun ">
-            <button class="send-btn" id="send-btn">↑</button>
+            <input type="text" id="user-input" placeholder="Ofojero`ya sorun" onkeydown="if(event.key === 'Enter') sendMsg()">
+            <button class="send-btn" id="send-btn" onclick="sendMsg()">↑</button>
         </div>
     </div>
 
@@ -250,7 +222,7 @@
             "oppenheimer": "Oppenheimer — atom bombasının yaradılma prosesini və fizir Robert Oppenheimerin həyatını izah edən Oskar mükafatlı filmdir.",
             "peaky blinders": "Peaky Blinders — Birinci Dünya Müharibəsindən sonra Birminhem şəhərində fəaliyyət göstərən quldur dəstəsindən bəhs edən kult britan serialıdır.",
             "lord of the rings": "The Lord of the Rings (Üzüklərin Hökmdarı) — J.R.R. Tolkien-in əsəri əsasında çəkilmiş, fantastika və orta əsr epik mübarizəsindən bəhs edən şah əsərdir.",
-            "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdir.",
+            "dune": "Dune — Frank Herbertin romanı əsasında çəkilmiş, səhra planeti Arrakis və hakimiyyət mübarizəsindən bəhs edən epik elmi-fantastik filmdır.",
 
             // ⚡ MİFOLOGİYA VƏ QƏDİM SİVİZASİYALAR
             "zevs": "Zevs — yunan mifologiyasında tanrıların və insanların atası, Olimpin hökmdarı və şimşək tanrısıdır.",
@@ -301,17 +273,9 @@
             "rusiya": "Rusiya Federasiyası — Dünyanın ən böyük ərazisinə malik Avrasiya dövlətidir. Paytaxtı Moskvadır. Beynəlxalq telefon kodu: +7."
         };
 
-        document.addEventListener("DOMContentLoaded", () => {
+        window.onload = function() {
             loadHistory();
-
-            document.getElementById('send-btn').addEventListener('click', sendMsg);
-            document.getElementById('clear-btn').addEventListener('click', clearHistory);
-            document.getElementById('user-input').addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    sendMsg();
-                }
-            });
-        });
+        };
 
         function loadHistory() {
             const container = document.getElementById('chat-container');
@@ -345,4 +309,37 @@
 
         function sendMsg() {
             const input = document.getElementById('user-input');
-            const text = input.value.trim()
+            const text = input.value.trim();
+            if (!text) return;
+
+            const container = document.getElementById('chat-container');
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = text;
+            container.appendChild(userMsg);
+
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => {
+                const query = text.toLowerCase();
+                let aiResponse = "Bu mövzu haqqında məlumat bazamda yoxdur, lakin Ofojero sistemi daim yenilənir!";
+
+                for (let key in maximusDatabase) {
+                    if (query.includes(key)) {
+                        aiResponse = maximusDatabase[key];
+                        break;
+                    }
+                }
+
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai';
+                aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊 Dinlə</button>`;
+                container.appendChild(aiMsg);
+                container.scrollTop = container.scrollHeight;
+                saveHistory();
+            }, 300);
+        }
+    </script>
+</
