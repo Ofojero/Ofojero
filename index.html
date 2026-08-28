@@ -517,20 +517,21 @@
         }
 
         function sendMsg() {
-            const input = document.getElementById('user-input');
-            const text = input.value.trim();
-            if (!text) return;
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (!text) return;
 
-            const container = document.getElementById('chat-container');
+    const container = document.getElementById('chat-container');
 
-            const userMsg = document.createElement('div');
-            userMsg.className = 'message user';
-            userMsg.textContent = text;
-            container.appendChild(userMsg);
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user';
+    userMsg.textContent = text;
+    container.appendChild(userMsg);
 
-            input.value = '';
-            container.scrollTop = container.scrollHeight;
-setTimeout(async () => {
+    input.value = '';
+    container.scrollTop = container.scrollHeight;
+
+    setTimeout(async () => {
         const aiResponse = await askOfojero(text);
 
         const aiMsg = document.createElement('div');
@@ -541,5 +542,3 @@ setTimeout(async () => {
         saveHistory();
     }, 300);
 }
-    </script>
-</
