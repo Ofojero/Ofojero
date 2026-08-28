@@ -530,13 +530,12 @@
 
     input.value = '';
     container.scrollTop = container.scrollHeight;
-
-    setTimeout(async () => {
+setTimeout(async () => {
         const aiResponse = await askOfojero(text);
 
         const aiMsg = document.createElement('div');
         aiMsg.className = 'message ai';
-        aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊</button>`;
+        aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse}')">🔊</button>`;
         container.appendChild(aiMsg);
         container.scrollTop = container.scrollHeight;
         saveHistory();
