@@ -533,14 +533,8 @@
 
             setTimeout(() => {
                 const query = text.toLowerCase();
-                let aiResponse = "Bu mövzu haqqında məlumat bazamda yoxdur, lakin Ofojero sistemi daim yenilənir!";
-
-                for (let key in maximusDatabase) {
-                    if (query.includes(key)) {
-                        aiResponse = maximusDatabase[key];
-                        break;
-                    }
-                }
+                const aiResponse =await askOfojero(text);
+}
 
                 const aiMsg = document.createElement('div');
                 aiMsg.className = 'message ai';
