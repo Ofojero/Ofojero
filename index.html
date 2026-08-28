@@ -518,10 +518,12 @@
 
         function sendMsg() {
     const input = document.getElementById('user-input');
+    if (!input) return;
     const text = input.value.trim();
     if (!text) return;
 
     const container = document.getElementById('chat-container');
+    if (!container) return;
 
     const userMsg = document.createElement('div');
     userMsg.className = 'message user';
@@ -530,14 +532,18 @@
 
     input.value = '';
     container.scrollTop = container.scrollHeight;
-setTimeout(async () => {
-        const aiResponse = await askOfojero(text);
 
-        const aiMsg = document.createElement('div');
-        aiMsg.className = 'message ai';
-        aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse}')">🔊</button>`;
-        container.appendChild(aiMsg);
-        container.scrollTop = container.scrollHeight;
-        saveHistory();
+    setTimeout(async () => {
+        try {
+            const aiResponse = await askOfojero(text);
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'message ai';
+            aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊</button>`;
+            container.appendChild(aiMsg);
+            container.scrollTop = container.scrollHeight;
+            saveHistory();
+        } catch (err) {
+            console.error("Xəta baş verdi:", err);
+        }
     }, 300);
 }
