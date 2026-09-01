@@ -507,21 +507,23 @@
             document.getElementById('chat-container').innerHTML = `<div class="message ai">Tarixçə təmizləndi.</div>`;
         }
 
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'az-AZ';
-                window.speechSynthesis.speak(utterance);
-            }
-        }
+       function speakText(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'az-AZ';
+        window.speechSynthesis.speak(utterance);
+    }
+}
 
-  function sendMsg() {
+function sendMsg() {
     const input = document.getElementById('user-input');
+    if (!input) return;
     const text = input.value.trim();
     if (!text) return;
 
     const container = document.getElementById('chat-container');
+    if (!container) return;
 
     const userMsg = document.createElement('div');
     userMsg.className = 'message user';
