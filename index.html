@@ -547,3 +547,13 @@ function sendMsg() {
         }
     }, 300);
 }
+        document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById('user-input');
+    if (input) {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                sendMsg();
+            }
+        });
+    }
+});
