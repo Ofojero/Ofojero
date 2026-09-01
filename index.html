@@ -532,28 +532,24 @@ function sendMsg() {
 
     input.value = '';
     container.scrollTop = container.scrollHeight;
-}
-    setTimeout(async () => {
-        try {
-            const aiResponse = await askOfojero(text);
-            const aiMsg = document.createElement('div');
-            aiMsg.className = 'message ai';
-            aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse}')">🔊</button>`;
-            container.appendChild(aiMsg);
-            container.scrollTop = container.scrollHeight;
-            saveHistory();
-        } catch (err) {
-            console.error("Xəta:", err);
+
+    setTimeout(() => {
+        const query = text.toLowerCase();
+        let aiResponse = "Bu mövzu haqqında məlumat bazamda yoxdur, lakin Ofojero sistemi daim yenilənir!";
+
+        for (let key in maximusDatabase) {
+            if (query.includes(key)) {
+                aiResponse = maximusDatabase[key];
+                break;
+            }
         }
+
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai';
+        aiMsg.innerHTML = `${aiResponse}<button class="tts-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊 Dinlə</button>`;
+        
+        container.appendChild(aiMsg);
+        container.scrollTop = container.scrollHeight;
+        saveHistory();
     }, 300);
 }
-        document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById('user-input');
-    if (input) {
-        input.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                sendMsg();
-            }
-        });
-    }
-});
