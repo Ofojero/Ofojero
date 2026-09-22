@@ -180,6 +180,15 @@
     </div>
 
     <script>
+        function startVoiceCall() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            alert("Mikrofon aktivdir!");
+        })
+        .catch(err => {
+            alert("Mikrofon icazəsi verilmədi!");
+        });
+}
         const maximusDatabase = {
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
             "hello": "Hello! Ofojero AI is fully operational with complete, uncompressed global language and knowledge packages.",
