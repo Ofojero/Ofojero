@@ -179,33 +179,52 @@
     </button>
 </div>
     </div>
-
-   let peer;
+let peer;
 let currentCall;
 
 function startVoiceCall() {
     peer = new Peer();
 
     peer.on('open', id => {
-        alert("Səsli zəngə hazırsınız! Sizin ID nömrəniz: " + id);
-        
-        let partnerId = prompt("Danışmaq istədiyiniz şəxsin ID nömrəsini daxil edin:");
+        alert("Sizin ID: " + id);
+        let partnerId = prompt("Qarşı tərəfin ID nömrəsini daxil edin:");
         
         if (partnerId) {
             navigator.mediaDevices.getUserMedia({ audio: true })
                 .then(stream => {
                     currentCall = peer.call(partnerId, stream);
-                    
                     currentCall.on('stream', remoteStream => {
                         playAudio(remoteStream);
                     });
                     alert("Zəng qoşuldu!");
                 })
                 .catch(err => {
-                    alert("Mikrofona icazə verilmədi: " + err);
+                    alert("Xəta: " + err);
                 });
         }
     });
+
+    peer.on('call', call => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                call.answer(stream);
+                call.on('stream', remoteStream => {
+                    playAudio(remoteStream);
+                });
+                alert("Zəng qəbul edildi!");
+            })
+            .catch(err => {
+                alert("Xəta: " + err);
+            });
+    });
+}
+
+function playAudio(stream) {
+    let audio = document.createElement('audio');
+    audio.srcObject = stream;
+    audio.autoplay = true;
+    document.body.appendChild(audio);
+} });
 
     peer.on('call', call => {
         navigator.mediaDevices.getUserMedia({ audio: true })
