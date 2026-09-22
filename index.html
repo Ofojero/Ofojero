@@ -180,14 +180,54 @@
 </div>
     </div>
 
-    <script>
-        function startVoiceCall() {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            alert("Mikrofon aktivdir!");
-        })
-        .catch(err => {
-            alert("Mikrofon icazəsi verilmədi!");
+   let peer;
+let currentCall;
+
+function startVoiceCall() {
+    peer = new Peer();
+
+    peer.on('open', id => {
+        alert("Səsli zəngə hazırsınız! Sizin ID nömrəniz: " + id);
+        
+        let partnerId = prompt("Danışmaq istədiyiniz şəxsin ID nömrəsini daxil edin:");
+        
+        if (partnerId) {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    currentCall = peer.call(partnerId, stream);
+                    
+                    currentCall.on('stream', remoteStream => {
+                        playAudio(remoteStream);
+                    });
+                    alert("Zəng qoşuldu!");
+                })
+                .catch(err => {
+                    alert("Mikrofona icazə verilmədi: " + err);
+                });
+        }
+    });
+
+    peer.on('call', call => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                call.answer(stream);
+                call.on('stream', remoteStream => {
+                    playAudio(remoteStream);
+                });
+                alert("Zəng qəbul edildi!");
+            })
+            .catch(err => {
+                alert("Mikrofon xətası: " + err);
+            });
+    });
+}
+
+function playAudio(stream) {
+    let audio = document.createElement('audio');
+    audio.srcObject = stream;
+    audio.autoplay = true;
+    document.body.appendChild(audio);
+}
         });
 }
         const maximusDatabase = {
