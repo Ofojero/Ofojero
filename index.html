@@ -186,7 +186,7 @@ function startVoiceCall() {
     peer = new Peer();
 
     peer.on('open', function(id) {
-        let partnerId = prompt("Sizin ID: " + id + "\n\nDanışmaq istədiyiniz şəxsin ID nömrəsini daxil edin:");
+        let partnerId = prompt("Sizin ID: " + id + "\n\nQarşı tərəfin ID nömrəsini daxil edin:");
         if (partnerId) {
             navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
                 currentCall = peer.call(partnerId, stream);
@@ -195,7 +195,7 @@ function startVoiceCall() {
                 });
                 alert("Zəng qoşuldu!");
             }).catch(function(err) {
-                alert("Mikrofon xətası: " + err);
+                alert("Xəta: " + err);
             });
         }
     });
@@ -208,7 +208,7 @@ function startVoiceCall() {
             });
             alert("Zəng qəbul edildi!");
         }).catch(function(err) {
-            alert("Mikrofon xətası: " + err);
+            alert("Xəta: " + err);
         });
     });
 }
@@ -218,29 +218,6 @@ function playAudio(stream) {
     audio.srcObject = stream;
     audio.autoplay = true;
     document.body.appendChild(audio);
-}
-    peer.on('call', call => {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                call.answer(stream);
-                call.on('stream', remoteStream => {
-                    playAudio(remoteStream);
-                });
-                alert("Zəng qəbul edildi!");
-            })
-            .catch(err => {
-                alert("Mikrofon xətası: " + err);
-            });
-    });
-}
-
-function playAudio(stream) {
-    let audio = document.createElement('audio');
-    audio.srcObject = stream;
-    audio.autoplay = true;
-    document.body.appendChild(audio);
-}
-        });
 }
         const maximusDatabase = {
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
