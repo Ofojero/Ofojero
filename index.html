@@ -350,11 +350,10 @@
                 container.appendChild(aiMsg);
                 container.scrollTop = container.scrollHeight;
                 saveHistory();
-            }, 300);
-        }
-    </script>
-</
-    let peer = null;
+           }, 300);
+}
+
+let peer = null;
 let currentCall = null;
 
 function startVoiceCall() {
@@ -392,3 +391,4 @@ function playAudio(stream) {
     audio.autoplay = true;
     document.body.appendChild(audio);
 }
+</script>
