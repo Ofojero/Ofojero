@@ -179,6 +179,66 @@
     </button>
 </div>
     </div>
+    import React, { useState } from 'react';
+import {
+  DailyProvider,
+  useCallFrame,
+  useParticipantIds,
+  useAudio,
+} from '@daily-co/daily-react';
+
+export default function VoiceCallApp({ roomUrl }) {
+  return (
+    <DailyProvider url={roomUrl}>
+      <CallRoom />
+    </DailyProvider>
+  );
+}
+
+function CallRoom() {
+  const callFrame = useCallFrame();
+  const [joined, setJoined] = useState(false);
+  const participantIds = useParticipantIds();
+
+  const joinCall = () => {
+    if (callFrame) {
+      callFrame.join({ url: roomUrl });
+      setJoined(true);
+    }
+  };
+
+  const leaveCall = () => {
+    if (callFrame) {
+      callFrame.leave();
+      setJoined(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center p-6 bg-slate-900 text-white rounded-xl shadow-lg">
+      <h2 className="text-xl font-bold mb-4">Ofojero Səsli Söhbət</h2>
+      
+      {!joined ? (
+        <button
+          onClick={joinCall}
+          className="px-6 py-3 bg-green-600 hover:bg-green-700 font-semibold rounded-lg transition"
+        >
+          Söhbətə Qoşul
+        </button>
+      ) : (
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-sm text-green-400">Canlı bağlantı aktivdir ({participantIds.length} nəfər otaqdadır)</p>
+          <button
+            onClick={leaveCall}
+            className="px-6 py-3 bg-red-600 hover:bg-red-700 font-semibold rounded-lg transition"
+          >
+            Söhbətdən Çıx
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
             "hello": "Hello! Ofojero AI is fully operational with complete, uncompressed global language and knowledge packages.",
