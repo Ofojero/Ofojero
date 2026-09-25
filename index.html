@@ -5,23 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ofojero</title>
     <style>
-       :root {
-    --bg-color: #0d2318;        /* Loqoya uyğun dərindən gələn yaşıl fon */
-    --panel-bg: #143625;        /* Panellər üçün bir az açıq yaşıl ton */
-    --accent: #22c55e;          /* Parlaq yaşıl detallar */
-    --accent-hover: #16a34a;    /* Üzərinə gələndə yaşıl ton */
-    --text-color: #ffffff;      /* İstədiyin kimi bütün yazılar tam Ağ rəng */
+      :root {
+    --bg-color: #0b1f14 !important;        /* Tünd zəngin yaşıl fon */
+    --panel-bg: #123524 !important;        /* Panellər üçün yaşıl ton */
+    --accent: #22c55e !important;          /* Parlaq yaşıl */
+    --text-color: #ffffff !important;      /* Bütün yazılar tam ağ */
 }
 
-/* Header və loqo hissəsi üçün */
+body {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+
 header {
-    background-color: var(--panel-bg);
-    color: #ffffff;
+    background-color: var(--panel-bg) !important;
+    color: #ffffff !important;
 }
 
 header span {
-    color: #ffffff; /* Ofojero yazısı ağ rəngdə */
-    font-weight: bold;
+    color: #ffffff !important;
 }
             background: var(--bg-deep);
             color: var(--text-main);
