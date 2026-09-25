@@ -5,26 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ofojero</title>
     <style>
-     :root {
-    --bg-color: #0b1f14 !important;        /* Tünd zəngin yaşıl fon */
-    --panel-bg: #123524 !important;        /* Panellər üçün yaşıl ton */
-    --accent: #22c55e !important;          /* Parlaq yaşıl */
-    --text-color: #ffffff !important;      /* Bütün yazılar tam ağ */
-}
+        :root {
+            --bg-deep: #030407;
+            --bg-panel: #080c14;
+            --bg-input: #0d1322;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+        }
 
-body {
-    background-color: var(--bg-color) !important;
-    color: var(--text-color) !important;
-}
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
 
-header {
-    background-color: var(--panel-bg) !important;
-    color: #ffffff !important;
-}
+        header {
+            background: var(--bg-panel);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            flex-shrink: 0;
+        }
 
-header span {
-    color: #ffffff !important;
-}
+        .icon-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        #chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 1050px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            padding: 16px 20px;
+            border-radius: 16px;
+            max-width: 85%;
+            line-height: 1.6;
+            word-break: break-word;
+            font-size: 1.02rem;
+            position: relative;
+        }
+
+        .user {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            align-self: flex-end;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai {
+            background: var(--bg-panel);
+            align-self: flex-start;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 4px;
+        }
+
+        .tts-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .tts-btn:hover { color: var(--accent); }
+
+        #input-area {
+            padding: 20px 24px;
+            background: var(--bg-panel);
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .input-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            align-items: center;
+            background: var(--bg-input);
+            border-radius: 35px;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 14px;
+            border: none;
+            background: transparent;
+            color: white;
+            outline: none;
+            font-size: 1.02rem;
+        }
+
+        button.send-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            color: var(--bg-deep);
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+        }
 
         button.send-btn:hover { background: var(--accent-hover); }
     </style>
@@ -37,8 +163,7 @@ header span {
     
     <div id="chat-container"></div>
 
-    <div id="input-area">
-        <div class="input-wrapper">
+   <div class="input-wrapper">
     <input type="text" id="user-input" placeholder="Ofojero'ya sorun" onkeydown="if(event.key === 'Enter') sendMsg()">
     <button class="send-btn" id="send-btn" onclick="sendMsg()">▲</button>
     <button id="voice-btn" title="Səsli danışıq" style="display: inline-flex; align-items: flex-end; gap: 2px; padding: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; cursor: pointer; height: 38px; width: 38px; justify-content: center; margin-left: 6px;">
@@ -51,7 +176,6 @@ header span {
         <span style="width: 2px; height: 8px; background: #4ade80; border-radius: 9999px;"></span>
     </button>
 </div>
-
     <script>
         const maximusDatabase = {
             "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
