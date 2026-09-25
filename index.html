@@ -5,15 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ofojero</title>
     <style>
-        :root {
-          --bg-color: #0b130f;
-          --panel-bg: #132219;
-          --accent: #10b981;
-          --accent-hover: #059669;
-          --text-color: #ecfdf5;
-        }
+       :root {
+    --bg-color: #0d2318;        /* Loqoya uyğun dərindən gələn yaşıl fon */
+    --panel-bg: #143625;        /* Panellər üçün bir az açıq yaşıl ton */
+    --accent: #22c55e;          /* Parlaq yaşıl detallar */
+    --accent-hover: #16a34a;    /* Üzərinə gələndə yaşıl ton */
+    --text-color: #ffffff;      /* İstədiyin kimi bütün yazılar tam Ağ rəng */
+}
 
-        body {
+/* Header və loqo hissəsi üçün */
+header {
+    background-color: var(--panel-bg);
+    color: #ffffff;
+}
+
+header span {
+    color: #ffffff; /* Ofojero yazısı ağ rəngdə */
+    font-weight: bold;
+}
             background: var(--bg-deep);
             color: var(--text-main);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
