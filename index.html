@@ -177,16 +177,55 @@
 </div>
     <script>
         const maximusDatabase = {
-            "salam": "Salam! Ofojero AI bazası tam genişləndirilmiş və heç bir ixtisar edilmədən aktivdir. Bütün dünya dilləri, elmi modullar və yaddaş sistemi tam güclə işləyir.",
-            "hello": "Hello! Ofojero AI is fully operational with complete, uncompressed global language and knowledge packages.",
-            "privet": "Привет! Офоджеро работает на максимальной и полной базе знаний без каких-либо сокращений.",
-            "hola": "¡Hola! Ofojero está listo con su base de datos completa y sin recortes.",
-            "bonjour": "Bonjour! Je suis Ofojero, votre assistant universel avec une base complète.",
-            "merhaba": "Merhaba! Hiçbir kısaltma yapılmamış tam Ofojero bilgi tabanı hizmetinizdedir.",
-            "necərsən": "Hər şey əladır! Bütün dillər, verilənlər və modullar tam siyahı ilə işləyir.",
-            "adın nədir": "Mən Ofojero — universal dil və bilik sistemiyəm.",
-            "kimsən": "Mən Ofojeroyam; dünya dilləri, elm, texnologiya, kino, mifologiya, coğrafiya və proqramlaşdırma üzrə heç bir məhdudiyyəti olmayan ən geniş sisteməm.",
+    // --- GÜNDƏLİK SALAMLAMALAR VƏ TANIŞLIQ ---
+    "salam": "Salam! 😄 Necəsən? Nə edirik bu gün?",
+    "merhaba": "Merhaba! 😄 Nasılsın? Bugün ne yapıyoruz?",
+    "necərsən": "Salam! 😄 Necəsən? Nə edirik bu gün?",
+    "adın nadir": "Salam! 😄 Necəsən? Nə edirik bu gün?",
+    "kimsən": "Salam! 😄 Necəsən? Nə edirik bu gün?",
 
+    // Qlobal və Avropa dilləri (Salamlaşma)
+    "hello": "Hello! 😄 How are you? What are we doing today?",
+    "privet": "Привет! 😄 Как дела? Что делаем сегодня?",
+    "hola": "¡Hola! 😄 ¿Cómo estás? ¿Qué hacemos hoy?",
+    "bonjour": "Bonjour ! 😄 Comment ça va ? Qu'est-ce qu'on fait aujourd'hui?",
+    "hallo": "Hallo! 😄 Wie geht es dir? Was machen wir heute?",
+    "ciao": "Ciao! 😄 Come stai? Che facciamo oggi?",
+    "olá": "Olá! 😄 Como estás? O que vamos fazer hoje?",
+    "olá_br": "Oi! 😄 Tudo bem? O que vamos fazer hoje?",
+    "cze": "Cześć! 😄 Jak się masz? Co robimy dzisiaj?",
+    "hej": "Hej! 😄 Hur mår du? Vad gör vi idag?",
+    "ukr": "Привіт! 😄 Як справи? Що робимо сьогодні?",
+    "niederlandisch": "Hoi! 😄 Hoe gaat het? Wat gaan we vandaag doen?",
+    "yunan": "Γεια σου! 😄 Τι κάνεις; Τι κάνουμε σήμερα;",
+
+    // Asiya və Digər dillər (Salamlaşma)
+    "konnichiwa": "こんにちは！😄 お元気ですか？今日は何をしますか？",
+    "nihao": "你好！😄 你好吗？我们今天做什么？",
+    "namaste": "नमस्ते! 😄 आप कैसे हैं? आज हम क्या कर रहे हैं?",
+    "ansyeong": "안녕하세요! 😄 잘 지내셨나요? 오늘 무엇을 할까요?",
+    "salam_ar": "مهلاً! 😄 كيف حالك؟ ماذا سنفعل اليوم؟",
+    "vietnam": "Xin chào! 😄 Bạn thế nào? Hôm nay chúng ta làm gì?",
+    "indoneziya": "Halo! 😄 Apa kabar? Apa yang kita lakukan hari ini?",
+
+    // --- GÜNDƏLİK İSTİFADƏ OLUNAN ƏSAS SÖZLƏR VƏ CAVABLAR ---
+    "saat": "Sənə həmişə dəqiq vaxtı deyəcəm! 😄",
+    "kömək": "Sənə kömək etməyə həmişə hazıram! Nə edirik?",
+    "hə": "Bəli! 😄 Davam edək?",
+    "yox": "Oldu, başqa nə edirik?",
+    "çox sağ ol": "Dəyməz! 😄 Həmişə kömək etməyə hazıram.",
+    "sağ ol": "Hələlik! 😄 Tezliklə görüşərik!",
+    "təşəkkürlər": "Buyur! 😄 Əlimdən gələni edirəm.",
+    "görüşənədək": "Hələlik! 😄 Növbəti dəfə görüşənə qədər!",
+    "nə var nə yox": "Hər şey qaydasındadır! 😄 Səndə necə gedir?",
+    "əla": "Əla! 😄 Belə davam edək!",
+    "zor": "Super! 😄 İrəli!",
+    "ideya": "Əla fikirdir! 😄 Dərhal keçək işə.",
+    "lap yaxşı": "Çox sevindim! 😄 Nə ilə məşğul oluruq?",
+    "bilmirəm": "Heç problem deyil, birlikdə öyrənərik! 😄",
+    "düzdür": "Tamamilə haqlısan! 😄",
+    "başlayaq": "Başlayaq! 😄 Qaldığımız yerdən davam edirik."
+};
             // 🗣️ DÜNYA DİLLƏRİNİN TAM VƏ ƏTRAFLI SİYAHISI
             "azərbaycan dili": "Azərbaycan dili — türk dilləri ailəsinin oğuz qrupuna daxil olan, latın qrafikası ilə yazılan dövlət dilimizdir.",
             "ingilis dili": "English (İngilis dili) — qlobal miqyasda ünsiyyət, elm, internet, aviasiya və biznesin əsas beynəlxalq dilidir.",
