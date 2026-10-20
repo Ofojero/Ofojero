@@ -5,13 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ofojero</title>
     <style>
-        /* Video Arxa Fon Stili */
+        :root {
+            --accent: #00ff88;
+            --accent-hover: #00cc6a;
+            --bg-deep: #0a0c10;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background-color: var(--bg-deep);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Arxa Fon Video */
         .video-background {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
             z-index: -1;
         }
@@ -22,75 +44,178 @@
             object-fit: cover;
         }
 
-        /* Əsas Dizayn */
-        :root {
-            --accent: #00ff88;
-            --accent-hover: #00cc6a;
-            --bg-deep: #0a0c10;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            color: #ffffff;
-            background-color: var(--bg-deep);
-        }
-
+        /* Yuxarı Başlıq (Header) */
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 25px;
-            background: rgba(10, 12, 16, 0.6);
-            backdrop-filter: blur(8px);
+            padding: 15px 30px;
+            background: rgba(10, 12, 16, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
 
         header span {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: var(--accent);
+            letter-spacing: 1px;
         }
 
         .icon-btn {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--accent);
             color: var(--bg-deep);
             cursor: pointer;
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.2rem;
             border: none;
+            transition: 0.2s;
         }
 
-        button.send-btn:hover, .icon-btn:hover {
+        .icon-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        /* Mərkəzi Çat Konteyneri */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 5;
+        }
+
+        .chat-section {
+            width: 100%;
+            max-width: 550px;
+            height: 70vh;
+            background: rgba(10, 12, 16, 0.65);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mesaj Siyahısı */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 5px;
+        }
+
+        .chat-message {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            max-width: 85%;
+        }
+
+        .chat-message.bot {
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            background: rgba(0, 255, 136, 0.2);
+            border-bottom-right-radius: 2px;
+        }
+
+        /* Yazı Bölməsi */
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 12px;
+            color: white;
+            font-size: 0.98rem;
+            outline: none;
+        }
+
+        .chat-input-area input::placeholder {
+            color: #aaa;
+        }
+
+        .chat-input-area button {
+            background: var(--accent);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--bg-deep);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .chat-input-area button:hover {
             background: var(--accent-hover);
         }
     </style>
 </head>
 <body>
 
-    <!-- Arxa fonda işləyən video -->
+    <!-- Arxa Fon Video -->
     <div class="video-background">
         <video autoplay muted loop id="bg-video">
             <source src="Ofojero sss.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Ofojero Platforması -->
+    <!-- Yuxarı Panel -->
     <header>
         <span>Ofojero</span>
-        <button class="icon-btn" id="clear-btn" onclick="clearHistory()">🗑️</button>
+        <button class="icon-btn" id="clear-btn" onclick="clearHistory()" title="Təmizlə">🗑️</button>
     </header>
 
-    <main style="padding: 20px; text-align: center;">
-        <h2>Ofojero Platformasına Xoş Gəlmisiniz</h2>
-    </main>
+    <!-- Sadə Söhbət Bölməsi -->
+    <div class="main-container">
+        <div class="chat-section">
+            
+            <div class="chat-messages">
+                <div class="chat-message bot">
+                    Salam! Mən Ofojero-yam. Sualınızı gözləyirəm.
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" placeholder="Ofojero'ya soruş...">
+                <button>➤</button>
+            </div>
+
+        </div>
+    </div>
 
     <script>
         function clearHistory() {
@@ -98,7 +223,7 @@
         }
     </script>
 </body>
-</html> 
+</html>
     
     <div id="chat-container"></div>
    <div class="input-wrapper">
