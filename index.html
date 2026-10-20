@@ -27,7 +27,7 @@
             flex-direction: column;
         }
 
-        /* Arxa Fon Video */
+        /* Arka Plan Video */
         .video-background {
             position: fixed;
             top: 0;
@@ -44,7 +44,7 @@
             object-fit: cover;
         }
 
-        /* Yuxarı Başlıq */
+        /* Üst Header */
         header {
             display: flex;
             align-items: center;
@@ -82,7 +82,7 @@
             transform: scale(1.05);
         }
 
-        /* Mərkəzi Söhbət Qutusu */
+        /* Merkez Chat Kutusu */
         .main-container {
             flex: 1;
             display: flex;
@@ -107,7 +107,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Mesaj Siyahısı */
+        /* Mesaj Alanı */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -121,6 +121,7 @@
         .chat-messages::-webkit-scrollbar {
             width: 6px;
         }
+
         .chat-messages::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
@@ -149,7 +150,7 @@
             border-bottom-right-radius: 2px;
         }
 
-        /* Yazı Bölməsi */
+        /* Yazı Yazma Alanı */
         .chat-input-area {
             display: flex;
             gap: 10px;
@@ -196,20 +197,20 @@
 </head>
 <body>
 
-    <!-- Arxa Fon Video -->
+    <!-- Arka Plan Video -->
     <div class="video-background">
         <video autoplay muted loop id="bg-video">
             <source src="Ofojero sss.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Yuxarı Header -->
+    <!-- Üst Başlık -->
     <header>
         <span>Ofojero</span>
         <button class="icon-btn" id="clear-btn" onclick="clearHistory()" title="Təmizlə">🗑️</button>
     </header>
 
-    <!-- Söhbət Bölməsi -->
+    <!-- Chat Bölümü -->
     <div class="main-container">
         <div class="chat-section">
             
@@ -228,14 +229,13 @@
     </div>
 
     <script>
-        // Mesaj Göndərmə Funksiyası
         function sendMessage() {
             const inputField = document.getElementById('user-input');
             const messagesBox = document.getElementById('messages-box');
             const text = inputField.value.trim();
 
             if (text !== "") {
-                // İstifadəçinin mesajı
+                // Kullanıcının yazdığı mesaj
                 const userMsg = document.createElement('div');
                 userMsg.className = 'chat-message user';
                 userMsg.textContent = text;
@@ -243,26 +243,15 @@
 
                 inputField.value = "";
                 messagesBox.scrollTop = messagesBox.scrollHeight;
-
-                // Ofojero CAVABI (Nümunə)
-                setTimeout(() => {
-                    const botMsg = document.createElement('div');
-                    botMsg.className = 'chat-message bot';
-                    botMsg.textContent = "Cavab hazırlanır...";
-                    messagesBox.appendChild(botMsg);
-                    messagesBox.scrollTop = messagesBox.scrollHeight;
-                }, 600);
             }
         }
 
-        // Enter düyməsinə basdıqda mesajı göndərmək
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         }
 
-        // Çatı təmizləmək
         function clearHistory() {
             document.getElementById('messages-box').innerHTML = `
                 <div class="chat-message bot">
@@ -272,11 +261,6 @@
     </script>
 </body>
 </html>
-    
-    <div id="chat-container"></div>
-   <div class="input-wrapper">
-    <input type="text" id="user-input" placeholder="Ofojero'ya sorun" onkeydown="if(event.key === 'Enter') sendMsg()">
-    <button class="send-btn" id="send-btn" onclick="sendMsg()">▲</button>
     <button id="voice-btn" title="Səsli danışıq" style="display: inline-flex; align-items: flex-end; gap: 2px; padding: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; cursor: pointer; height: 38px; width: 38px; justify-content: center; margin-left: 6px;">
         <span style="width: 2px; height: 8px; background: #4ade80; border-radius: 9999px;"></span>
         <span style="width: 2px; height: 16px; background: #4ade80; border-radius: 9999px;"></span>
