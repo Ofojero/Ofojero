@@ -293,113 +293,50 @@
     "necərsən": "Salam! 😄 Necəsən? Nə edirik bu gün?",
     "adın nadir": "Salam! 😄 Necəsən? Nə edirik bu gün?",
     "kimsən": "Salam! 😄 Necəsən? Nə edirik bu gün?",
-            // Ofojero çoxdilli cavablar bazası
-const ofojeroResponses = {
-  ru: {
-    lang: "Rus dili",
-    text: "Спасибо, отлично! 🚀 А сам как? Чем могу помочь в Офоджеро?",
-    translation: "Təşəkkürlər, əla! Bəs özün necəsən? Ofojero-da nə ilə kömək edə bilərəm?"
-  },
-  tr: {
-    lang: "Türk dili",
-    text: "İyiyim, teşekkür ederim! 🚀 Sen nasılsın? Bugün Ofojero'da sana nasıl yardımcı olabilirim?",
-    translation: "Yaxşıyam, təşəkkür edirəm! Bəs sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  es: {
-    lang: "İspan dili",
-    text: "¡Estoy muy bien, gracias! 🌟 ¿Y tú qué tal? ¿Cómo te puedo ayudar hoy en Ofojero?",
-    translation: "Çox yaxşıyam, təşəkkürlər! Bəs sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  fr: {
-    lang: "Fransız dili",
-    text: "Je vais très bien, merci ! 🚀 Et toi, comment ça va ? Comment puis-je t'aider sur Ofojero aujourd'hui ?",
-    translation: "Çox yaxşıyam, təşəkkürlər! Bəs sən, necə gedir? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  sl: {
-    lang: "Sloven dili",
-    text: "Odlično sem, hvala! 🚀 Pa ti, kako si? Ti lahko danes pri čem pomagam v Ofojeru?",
-    translation: "Əlayam, təşəkkürlər! Bəs sən, necəsən? Bu gün Ofojeroda nəyəsə kömək edə bilərəm?"
-  },
-  zh: {
-    lang: "Çin dili",
-    text: "我很好，谢谢！🚀 你呢？今天在 Ofojero 我能帮你点什么？",
-    translation: "Mən yaxşıyam, təşəkkürlər! Bəs sən? Bu gün Ofojero-da sənə nədə kömək edə bilərəm?"
-  },
-  ar: {
-    lang: "Ərəb dili",
-    text: "أنا بخير، شكراً لك! 🚀 وأنت كيف حالك؟ كيف يمكنني مساعدتك في أوفوجيرو اليوم؟",
-    translation: "Mən yaxşıyam, təşəkkür edirəm! Bəs sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  ja: {
-    lang: "Yapon dili",
-    text: "おかげさまで元気です！🚀 あなたはいかがですか？今日のOfojeroではどのようなお手伝いをしましょうか？",
-    translation: "Şükürlər olsun ki, yaxşıyam! Bəs sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  ko: {
-    lang: "Koreya dili",
-    text: "잘 지내고 있어요, 감사합니다! 🚀 당신은 어떠세요? 오늘 오포제로서 무엇을 도와드릴까요?",
-    translation: "Yaxşıyam, təşəkkür edirəm! Bəs sən necəsən? Bu gün Ofojero-da sənə nə ilə kömək edə bilərəm?"
-  },
-  it: {
-    lang: "İtalyan dili",
-    text: "Sto benissimo, grazie! 🚀 E tu come stai? Come posso aiutarti oggi su Ofojero?",
-    translation: "Çox yaxşıyam, təşəkkürlər! Bəs sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  pt: {
-    lang: "Portuqal dili",
-    text: "Estou muito bem, obrigado! 🚀 E você, como está? Como posso te ajudar hoje no Ofojero?",
-    translation: "Çox yaxşıyam, təşəkkürlər! Bəs sən, necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  fa: {
-    lang: "Fars dili",
-    text: "من خوبم، ممنون! 🚀 خودت چطوری؟ امروز چطور می‌توانم در اوفوجیرو به تو کمک کنم؟",
-    translation: "Mən yaxşıyam, təşəkkürlər! Özün necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  hi: {
-    lang: "Hind dili",
-    text: "मैं बहुत अच्छा हूँ, शुक्रिया! 🚀 आप कैसे हैं? आज ओफ़ोजेरो में मैं आपकी क्या मदद कर सकता हूँ?",
-    translation: "Mən çox yaxşıyam, təşəkkürlər! Sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  uk: {
-    lang: "Ukrayna dili",
-    text: "Дякую, все чудово! 🚀 А сам як? Чим можу допомогти в Офоджеро?",
-    translation: "Təşəkkürlər, hər şey əladır! Bəs özün necəsən? Ofojero-da nə ilə kömək edə bilərəm?"
-  },
-  sv: {
-    lang: "İsveç dili",
-    text: "Jag mår bra, tack! 🚀 Hur är det själv? Vad kan jag hjälpa dig med på Ofojero idag?",
-    translation: "Özümü yaxşı hiss edirəm, təşəkkürlər! Özün necəsən? Bu gün Ofojero-da sənə nədə kömək edə bilərəm?"
-  },
-  la: {
-    lang: "Latın dili",
-    text: "Optime valeo, gratias tibi ago! 🚀 Quomodo tu vales? Quomodo te hodie in Ofojero adiuvare possum?",
-    translation: "Əla vəziyyətdəyəm, sənə təşəkkür edirəm! Sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  },
-  nl: {
-    lang: "Niderland dili",
-    text: "Het gaat heel goed, dank je! 🚀 Hoe is het met jou? Waar kan ik je vandaag mee helpen op Ofojero?",
-    translation: "Çox yaxşı gedir, təşəkkürlər! Sən necəsən? Bu gün Ofojero-da sənə nədə kömək edə bilərəm?"
-  },
-  vi: {
-    lang: "Vyetnam dili",
-    text: "Tôi rất khỏe, cảm ơn bạn! 🚀 Còn bạn thì sao? Hôm nay tôi có thể giúp gì cho bạn trên Ofojero?",
-    translation: "Çox yaxşıyam, təşəkkür edirəm! Bəs sən necəsən? Bu gün Ofojero-da sənə necə kömək edə bilərəm?"
-  }
-};
+            // 1. Çoxdilli cavablar siyahısı
+const multiLangResponses = [
+  "Спасибо, отлично! 🚀 А сам как? Чем могу помочь в Офоджеро?", // Rus
+  "İyiyim, teşekkür ederim! 🚀 Sen nasılsın? Bugün Ofojero'da sana nasıl yardımcı olabilirim?", // Türk
+  "¡Estoy muy bien, gracias! 🌟 ¿Y tú qué tal? ¿Cómo te puedo ayudar hoy en Ofojero?", // İspan
+  "Je vais très bien, merci ! 🚀 Et toi, comment ça va ?", // Fransız
+  "Odlično sem, hvala! 🚀 Pa ti, kako si?", // Sloven
+  "我很好，谢谢！🚀 你呢？今天在 Ofojero 我能帮你点什么？", // Çin
+  "أنا بخير، شكراً لك! 🚀 وأنت كيف حالك؟", // Ərəb
+  "おかげさまで元気です！🚀 あなたはいかがですか？", // Yapon
+  "잘 지내고 있어요, 감사합니다! 🚀 당신은 어떠세요?", // Koreya
+  "Sto benissimo, grazie! 🚀 E tu come stai?", // İtalyan
+  "Estou muito bem, obrigado! 🚀 E você, como está?", // Portuqal
+  "من خوبم، ممنون! 🚀 خودت چطوری؟", // Fars
+  "मैं बहुत अच्छा हूँ, शुक्रिया! 🚀 आप कैसे हैं?", // Hind
+  "Дякую, все чудово! 🚀 А сам як?", // Ukrayna
+  "Jag mår bra, tack! 🚀 Hur är det själv?", // İsveç
+  "Optime valeo, gratias tibi ago! 🚀 Quomodo tu vales?", // Latın
+  "Het gaat heel goed, dank je! 🚀 Hoe is het met jou?", // Niderland
+  "Tôi rất khỏe, cảm ơn bạn! 🚀 Còn bạn thì sao?" // Vyetnam
+];
 
-// Cavabı çağırmaq üçün funksiya
-function getOfojeroResponse(langCode = null) {
-  // Əgər konkret dil kodu ötürülübsə (məsələn: 'es', 'sl'), həmin dildə cavab verir.
-  // Ötürülməyibsə və ya dil tapılmadıqda təsadüfi (random) bir dildə cavab verir.
-  if (langCode && ofojeroResponses[langCode]) {
-    return ofojeroResponses[langCode].text;
-  }
-
-  const keys = Object.keys(ofojeroResponses);
-  const randomKey = keys[Math.floor(Math.random() * keys.length)];
-  return ofojeroResponses[randomKey].text;
+// 2. Təsadüfi (random) cavab qaytaran funksiya
+function getRandomHowAreYouResponse() {
+  const randomIndex = Math.floor(Math.random() * multiLangResponses.length);
+  return multiLangResponses[randomIndex];
 }
 
+// 3. Sizin əsas baza obyektiniz
+const maximusDatabase = {
+  // --- GÜNDƏLİK SALAMLAMALAR VƏ TANIŞLIQ ---
+  "salam": "Salam! 🤗 Necəsən? Nə edirik bu gün?",
+  "merhaba": "Merhaba! 🤗 Nasılsın? Bugün ne yapıyoruz?",
+  
+  // İstifadəçi necə olduğunu soruşanda təsadüfi bir dildə cavab verəcək:
+  "nasilsin": getRandomHowAreYouResponse(),
+  "nasılsın": getRandomHowAreYouResponse(),
+  "necesen": getRandomHowAreYouResponse(),
+  "necarsan": getRandomHowAreYouResponse(),
+  "how are you": getRandomHowAreYouResponse(),
+  
+  "adin nedir": "Salam! 🤗 Mən Ofojero platformasının köməkçisiyəm.",
+  "kimsan": "Salam! 🤗 Mən Ofojero-yam."
+};
     // Qlobal və Avropa dilləri (Salamlaşma)
     "hello": "Hello! 😄 How are you? What are we doing today?",
     "privet": "Привет! 😄 Как дела? Что делаем сегодня?",
