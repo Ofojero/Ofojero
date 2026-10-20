@@ -18,7 +18,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #ffffff;
             background-color: var(--bg-deep);
             height: 100vh;
@@ -27,7 +27,7 @@
             flex-direction: column;
         }
 
-        /* Arxa Fon Video */
+        /* Arka Plan Video */
         .video-background {
             position: fixed;
             top: 0;
@@ -44,13 +44,13 @@
             object-fit: cover;
         }
 
-        /* Yuxarı Başlıq (Header) */
+        /* Üst Header */
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 15px 30px;
-            background: rgba(10, 12, 16, 0.5);
+            background: rgba(10, 12, 16, 0.4);
             backdrop-filter: blur(10px);
             z-index: 10;
         }
@@ -82,7 +82,7 @@
             transform: scale(1.05);
         }
 
-        /* Mərkəzi Çat Konteyneri */
+        /* Merkez Chat Kutusu */
         .main-container {
             flex: 1;
             display: flex;
@@ -94,20 +94,20 @@
 
         .chat-section {
             width: 100%;
-            max-width: 550px;
+            max-width: 600px;
             height: 70vh;
-            background: rgba(10, 12, 16, 0.65);
+            background: rgba(10, 12, 16, 0.55);
             backdrop-filter: blur(15px);
             border-radius: 16px;
             padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Mesaj Siyahısı */
+        /* Mesaj Alanı (Temizlendi) */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -117,34 +117,13 @@
             padding-right: 5px;
         }
 
-        .chat-message {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            max-width: 85%;
-        }
-
-        .chat-message.bot {
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border-left: 3px solid var(--accent);
-        }
-
-        .chat-message.user {
-            align-self: flex-end;
-            background: rgba(0, 255, 136, 0.2);
-            border-bottom-right-radius: 2px;
-        }
-
-        /* Yazı Bölməsi */
+        /* Yazı Yazma Alanı */
         .chat-input-area {
             display: flex;
             gap: 10px;
             margin-top: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 12px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
@@ -153,9 +132,9 @@
             flex: 1;
             background: transparent;
             border: none;
-            padding: 10px 12px;
+            padding: 10px;
             color: white;
-            font-size: 0.98rem;
+            font-size: 1rem;
             outline: none;
         }
 
@@ -186,27 +165,25 @@
 </head>
 <body>
 
-    <!-- Arxa Fon Video -->
+    <!-- Arka Planda Çalışan Video -->
     <div class="video-background">
         <video autoplay muted loop id="bg-video">
             <source src="Ofojero sss.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Yuxarı Panel -->
+    <!-- Üst Başlık -->
     <header>
         <span>Ofojero</span>
         <button class="icon-btn" id="clear-btn" onclick="clearHistory()" title="Təmizlə">🗑️</button>
     </header>
 
-    <!-- Sadə Söhbət Bölməsi -->
+    <!-- Temiz Chat Alanı -->
     <div class="main-container">
         <div class="chat-section">
             
-            <div class="chat-messages">
-                <div class="chat-message bot">
-                    Salam! Mən Ofojero-yam. Sualınızı gözləyirəm.
-                </div>
+            <div class="chat-messages" id="messages-box">
+                <!-- Eski mesajlar tamamen kaldırıldı -->
             </div>
 
             <div class="chat-input-area">
@@ -219,7 +196,7 @@
 
     <script>
         function clearHistory() {
-            console.log("Tarixçə təmizləndi.");
+            document.getElementById('messages-box').innerHTML = '';
         }
     </script>
 </body>
