@@ -293,7 +293,6 @@
     "necərsən": "Salam! 😄 Necəsən? Nə edirik bu gün?",
     "adın nadir": "Salam! 😄 Necəsən? Nə edirik bu gün?",
     "kimsən": "Salam! 😄 Necəsən? Nə edirik bu gün?",
-            // 1. Çoxdilli cavablar siyahısı
 const multiLangResponses = [
   "Спасибо, отлично! 🚀 А сам как? Чем могу помочь в Офоджеро?", // Rus
   "İyiyim, teşekkür ederim! 🚀 Sen nasılsın? Bugün Ofojero'da sana nasıl yardımcı olabilirim?", // Türk
@@ -314,20 +313,6 @@ const multiLangResponses = [
   "Het gaat heel goed, dank je! 🚀 Hoe is het met jou?", // Niderland
   "Tôi rất khỏe, cảm ơn bạn! 🚀 Còn bạn thì sao?" // Vyetnam
 ];
-
-// 2. Təsadüfi (random) cavab qaytaran funksiya
-function getRandomHowAreYouResponse() {
-  const randomIndex = Math.floor(Math.random() * multiLangResponses.length);
-  return multiLangResponses[randomIndex];
-}
-
-  // İstifadəçi necə olduğunu soruşanda təsadüfi bir dildə cavab verəcək:
-  "nasilsin": getRandomHowAreYouResponse(),
-  "nasılsın": getRandomHowAreYouResponse(),
-  "necesen": getRandomHowAreYouResponse(),
-  "necarsan": getRandomHowAreYouResponse(),
-  "how are you": getRandomHowAreYouResponse(),
-  
   "adin nedir": "Salam! 🤗 Mən Ofojero platformasının köməkçisiyəm.",
   "kimsan": "Salam! 🤗 Mən Ofojero-yam."
 };
