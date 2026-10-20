@@ -27,7 +27,7 @@
             flex-direction: column;
         }
 
-        /* Arka Plan Video */
+        /* Arxa Fon Video */
         .video-background {
             position: fixed;
             top: 0;
@@ -44,7 +44,7 @@
             object-fit: cover;
         }
 
-        /* Üst Header */
+        /* Yuxarı Başlıq */
         header {
             display: flex;
             align-items: center;
@@ -82,7 +82,7 @@
             transform: scale(1.05);
         }
 
-        /* Merkez Chat Kutusu */
+        /* Mərkəzi Söhbət Qutusu */
         .main-container {
             flex: 1;
             display: flex;
@@ -95,7 +95,7 @@
         .chat-section {
             width: 100%;
             max-width: 600px;
-            height: 70vh;
+            height: 75vh;
             background: rgba(10, 12, 16, 0.55);
             backdrop-filter: blur(15px);
             border-radius: 16px;
@@ -107,21 +107,52 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Mesaj Alanı (Temizlendi) */
+        /* Mesaj Siyahısı */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            padding-right: 5px;
+            padding-right: 8px;
+            margin-bottom: 15px;
         }
 
-        /* Yazı Yazma Alanı */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .chat-message {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            max-width: 85%;
+            word-break: break-word;
+        }
+
+        .chat-message.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.08);
+            border-bottom-left-radius: 2px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            background: rgba(0, 255, 136, 0.25);
+            color: #ffffff;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* Yazı Bölməsi */
         .chat-input-area {
             display: flex;
             gap: 10px;
-            margin-top: 15px;
             background: rgba(255, 255, 255, 0.08);
             padding: 8px 12px;
             border-radius: 12px;
@@ -165,38 +196,78 @@
 </head>
 <body>
 
-    <!-- Arka Planda Çalışan Video -->
+    <!-- Arxa Fon Video -->
     <div class="video-background">
         <video autoplay muted loop id="bg-video">
             <source src="Ofojero sss.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Üst Başlık -->
+    <!-- Yuxarı Header -->
     <header>
         <span>Ofojero</span>
         <button class="icon-btn" id="clear-btn" onclick="clearHistory()" title="Təmizlə">🗑️</button>
     </header>
 
-    <!-- Temiz Chat Alanı -->
+    <!-- Söhbət Bölməsi -->
     <div class="main-container">
         <div class="chat-section">
             
             <div class="chat-messages" id="messages-box">
-                <!-- Eski mesajlar tamamen kaldırıldı -->
+                <div class="chat-message bot">
+                    Salam! Mən Ofojero-yam. Sualınızı gözləyirəm.
+                </div>
             </div>
 
             <div class="chat-input-area">
-                <input type="text" placeholder="Ofojero'ya soruş...">
-                <button>➤</button>
+                <input type="text" id="user-input" placeholder="Ofojero'ya soruş..." onkeydown="handleKeyPress(event)">
+                <button onclick="sendMessage()">➤</button>
             </div>
 
         </div>
     </div>
 
     <script>
+        // Mesaj Göndərmə Funksiyası
+        function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const messagesBox = document.getElementById('messages-box');
+            const text = inputField.value.trim();
+
+            if (text !== "") {
+                // İstifadəçinin mesajı
+                const userMsg = document.createElement('div');
+                userMsg.className = 'chat-message user';
+                userMsg.textContent = text;
+                messagesBox.appendChild(userMsg);
+
+                inputField.value = "";
+                messagesBox.scrollTop = messagesBox.scrollHeight;
+
+                // Ofojero CAVABI (Nümunə)
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chat-message bot';
+                    botMsg.textContent = "Cavab hazırlanır...";
+                    messagesBox.appendChild(botMsg);
+                    messagesBox.scrollTop = messagesBox.scrollHeight;
+                }, 600);
+            }
+        }
+
+        // Enter düyməsinə basdıqda mesajı göndərmək
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Çatı təmizləmək
         function clearHistory() {
-            document.getElementById('messages-box').innerHTML = '';
+            document.getElementById('messages-box').innerHTML = `
+                <div class="chat-message bot">
+                    Salam! Mən Ofojero-yam. Sualınızı gözləyirəm.
+                </div>`;
         }
     </script>
 </body>
